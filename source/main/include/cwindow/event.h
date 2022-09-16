@@ -2,104 +2,58 @@
 
 #include <stddef.h>
 
-/**
- * Events in CrossWindow are heavily influenced by:
- * - winit by Pierre Krieger <https://github.com/tomaka/winit>
- * - W3's DOM Events
- * <https://dvcs.w3.org/hg/dom3events/raw-file/tip/html/DOM3-Events.html>
- */
+// Events in CrossWindow are heavily influenced by:
+// - winit by Pierre Krieger <https://github.com/tomaka/winit>
+// - W3's DOM Events
+// <https://dvcs.w3.org/hg/dom3events/raw-file/tip/html/DOM3-Events.html
 namespace cwin
 {
     class Window;
 
-    enum class EventType : size_t
+    enum class EventType : int
     {
         None = 0,
-
-        // Closing a window
-        Close,
-
-        // Creating a window
-        Create,
-
-        // Focus/Unfocus on a window
-        Focus,
-
-        // Paint events, a good time to present any graphical changes
-        Paint,
-
-        // Resizing a window
-        Resize,
-
-        // Change in the screen DPI scaling (such as moving a window to a monitor
-        // with a larger DPI.
-        DPI,
-
-        // Keyboard input such as press/release events
-        Keyboard,
-
-        // Mouse moving events
-        MouseMove,
-
-        // Raw mouse data events
-        MouseRaw,
-
-        // Mouse scrolling events
-        MouseWheel,
-
-        // Mouse button press events
-        MouseInput,
-
-        // Touch events
-        Touch,
-
-        // Gamepad Input Events such as analog sticks, button presses
-        Gamepad,
-
-        // Dropping a file on the window
-        DropFile,
-
-        // Hovering a file over a window
-        HoverFile,
-
+        Close,      // Closing a window
+        Create,     // Creating a window
+        Focus,      // Focus/Unfocus on a window
+        Paint,      // Paint events, a good time to present any graphical changes
+        Resize,     // Resizing a window
+        DPI,        // Change in the screen DPI scaling (such as moving a window to a monitor with a larger DPI.
+        Keyboard,   // Keyboard input such as press/release events
+        MouseMove,  // Mouse moving events
+        MouseRaw,   // Raw mouse data events
+        MouseWheel, // Mouse scrolling events
+        MouseInput, // Mouse button press events
+        Touch,      // Touch events
+        Gamepad,    // Gamepad Input Events such as analog sticks, button presses
+        DropFile,   // Dropping a file on the window
+        HoverFile,  // Hovering a file over a window
         EventTypeMax
     };
 
-    /**
-     * Focus data passed with Focus events
-     */
+    // Focus data passed with Focus events
     struct FocusData
     {
-        // true if focused, false if not
-        bool focused;
+        bool focused; // true if focused, false if not
 
         FocusData(bool focused);
 
         static const EventType type = EventType::Focus;
     };
 
-    /**
-     * Resize data passed with Resize events
-     */
+    // Resize data passed with Resize events
     struct ResizeData
     {
-        // new width of window viewport
-        unsigned width;
+        unsigned int width;    // new width of window viewport
+        unsigned int height;   // New height of window viewport
+        bool         resizing; // In the process of resizing
 
-        // New height of window viewport
-        unsigned height;
-
-        // In the process of resizing
-        bool resizing;
-
-        ResizeData(unsigned width, unsigned height, bool resizing);
+        ResizeData(unsigned int width, unsigned int height, bool resizing);
 
         static const EventType type = EventType::Resize;
     };
 
-    /**
-     * DPI data passed with DPI events
-     */
+    // DPI data passed with DPI events
     struct DpiData
     {
         float scale;
@@ -109,41 +63,28 @@ namespace cwin
         static const EventType type = EventType::DPI;
     };
 
-    /**
-     * The state of a button press, be it keyboard, mouse, etc.
-     */
-    enum ButtonState : size_t
+    // The state of a button press, be it keyboard, mouse, etc.
+    enum ButtonState : int
     {
         Pressed = 0,
         Released,
         ButtonStateMax
     };
 
-    /**
-     * The state of modifier keys such as ctrl, alt, shift, and the windows/command
-     * buttons. Pressed is true, released is false;
-     */
+    // The state of modifier keys such as ctrl, alt, shift, and the windows/command
+    // buttons. Pressed is true, released is false;
     struct ModifierState
     {
-        // Ctrl key
-        bool ctrl;
-
-        // Alt key
-        bool alt;
-
-        // Shift key
-        bool shift;
-
-        // Meta buttons such as the Windows button or Mac's Command button
-        bool meta;
+        bool ctrl;  // Ctrl key
+        bool alt;   // Alt key
+        bool shift; // Shift key
+        bool meta;  // Meta buttons such as the Windows button or Mac's Command button
 
         ModifierState(bool ctrl = false, bool alt = false, bool shift = false, bool meta = false);
     };
 
-    /**
-     * Key event enum
-     */
-    enum class Key : size_t
+    // Key event enum
+    enum class Key : int
     {
         // Keyboard
         Escape = 0,
@@ -259,9 +200,7 @@ namespace cwin
     const char* convertKeyToString(Key key);
     Key         convertStringToKey(const char* str);
 
-    /**
-     * Data sent during keyboard events
-     */
+    // Data sent during keyboard events
     struct KeyboardData
     {
         Key           key;
@@ -283,32 +222,19 @@ namespace cwin
         MouseRawData(int deltax, int deltay);
     };
 
-    /**
-     * The event data passed with mouse events click, mouse moving events
-     */
+    // The event data passed with mouse events click, mouse moving events
     struct MouseMoveData
     {
-        // Current x position relative to active window
-        unsigned x;
-
-        // Current y position relative to active window
-        unsigned y;
-
-        // Current global x position
-        unsigned screenx;
-
-        // Current in global y position
-        unsigned screeny;
-
-        // Change in x relative to previous event, used for FPS motion
-        int deltax;
-
-        // Change in y relative to previous event, used for FPS motion
-        int deltay;
+        unsigned int x;       // Current x position relative to active window
+        unsigned int y;       // Current y position relative to active window
+        unsigned int screenx; // Current global x position
+        unsigned int screeny; // Current in global y position
+        int          deltax;  // Change in x relative to previous event, used for FPS motion
+        int          deltay;  // Change in y relative to previous event, used for FPS motion
 
         static const EventType type = EventType::MouseMove;
 
-        MouseMoveData(unsigned x, unsigned y, unsigned screenx, unsigned screeny, int deltax, int deltay);
+        MouseMoveData(unsigned int x, unsigned int y, unsigned int screenx, unsigned int screeny, int deltax, int deltay);
     };
 
     enum MouseInput
@@ -321,9 +247,7 @@ namespace cwin
         MouseInputMax
     };
 
-    /**
-     * Data passed with mouse input events
-     */
+    // Data passed with mouse input events
     struct MouseInputData
     {
         MouseInput             button;
@@ -334,9 +258,7 @@ namespace cwin
         MouseInputData(MouseInput button, ButtonState state, ModifierState modifiers);
     };
 
-    /**
-     * Data passed with mouse wheel events
-     */
+    // Data passed with mouse wheel events
     struct MouseWheelData
     {
         double                 delta;
@@ -346,46 +268,8 @@ namespace cwin
         MouseWheelData(double delta, ModifierState modifiers);
     };
 
-    /**
-     * Touch point data
-     */
-    struct TouchPoint
-    {
-        // A unique id for each touch point
-        unsigned long id;
-
-        // touch coordinate relative to whole screen origin in pixels
-        unsigned screenX;
-
-        // touch coordinate relative to whole screen origin in pixels
-        unsigned screenY;
-
-        // touch coordinate relative to window in pixels.
-        unsigned clientX;
-
-        // touch coordinate relative to window in pixels.
-        unsigned clientY;
-
-        // Did the touch point change
-        bool isChanged;
-    };
-
-    /**
-     * Data passed for touch events
-     */
-    struct TouchData
-    {
-        unsigned numTouches;
-
-        TouchPoint touches[32];
-
-        static const EventType type = EventType::Touch;
-    };
-
-    /**
-     * Gamepad Button pressed enum
-     */
-    enum class GamepadButton : size_t
+    // Gamepad Button pressed enum
+    enum class GamepadButton : int
     {
         DPadUp = 0,
         DPadDown,
@@ -404,10 +288,8 @@ namespace cwin
         GamepadButtonMax
     };
 
-    /**
-     * Gamepad analog stick enum
-     */
-    enum class AnalogInput : size_t
+    // Gamepad analog stick enum
+    enum class AnalogInput : int
     {
         // gamepad
         AnalogLeftTrigger,
@@ -427,44 +309,24 @@ namespace cwin
 
     typedef const char* AnalogToStringMap[static_cast<size_t>(AnalogInput::AnalogInputsMax)];
 
-    /**
-     * Data passed for gamepad events
-     */
+    // Data passed for gamepad events
     struct GamepadData
     {
-        // If the gamepad is connected or not
-        bool connected;
-
-        // Gamepad Index
-        size_t index;
-
-        // String id of the brand of the gamepad
-        const char* id;
-
-        // String id that lays out controller mapping (Southpaw, etc.)
-        const char* mapping;
-
-        // Analog Axis input data, such as joysticks, normalized range [-1, 1]
-        double axis[64];
-
-        // The number of analog axes
-        unsigned numAxes;
-
-        // Analog gamepad buttons like triggers, bound to [0, 1].
-        double analogButton[64];
-
-        bool digitalButton[64];
-
-        // Number of digital buttons and analog buttons
-        unsigned numButtons;
+        bool          connected;     // If the gamepad is connected or not
+        int           index;         // Gamepad Index
+        const char*   id;            // String id of the brand of the gamepad
+        const char*   mapping;       // String id that lays out controller mapping (Southpaw, etc.)
+        float*        axis;          // 64, Analog Axis input data, such as joysticks, normalized range [-1, 1]
+        float*        analogButton;  // 64, Analog gamepad buttons like triggers, bound to [0, 1].
+        unsigned int  numAxes;       // The number of analog axes
+        unsigned long digitalButton; // 64
+        unsigned int  numButtons;    // Number of digital buttons and analog buttons
 
         static const EventType type = EventType::Gamepad;
     };
 
-    /**
-     * SDL does something similar:
-     * <https://www.libsdl.org/release/SDL-1.2.15/docs/html/sdlevent.html>
-     */
+    // SDL does something similar:
+    // <https://www.libsdl.org/release/SDL-1.2.15/docs/html/sdlevent.html>
     union EventData
     {
         FocusData      focus;
@@ -474,7 +336,6 @@ namespace cwin
         MouseMoveData  mouseMove;
         MouseInputData mouseInput;
         MouseWheelData mouseWheel;
-        TouchData      touch;
         GamepadData    gamepad;
         MouseRawData   mouseRaw;
 
@@ -485,14 +346,9 @@ namespace cwin
     class Event
     {
     public:
-        // The event's type
-        EventType type;
-
-        // Pointer to a CrossWindow window
-        Window* window;
-
-        // Inner data of the event
-        EventData data;
+        Window*   window; // Pointer to a CrossWindow window
+        EventType type;   // The event's type
+        EventData data;   // Inner data of the event
 
         Event(EventType type = EventType::None, Window* window = nullptr);
         Event(FocusData data, Window* window = nullptr);
@@ -502,7 +358,6 @@ namespace cwin
         Event(MouseRawData data, Window* window = nullptr);
         Event(MouseInputData data, Window* window = nullptr);
         Event(MouseWheelData data, Window* window = nullptr);
-        Event(TouchData data, Window* window = nullptr);
         Event(GamepadData data, Window* window = nullptr);
         Event(DpiData data, Window* window = nullptr);
 

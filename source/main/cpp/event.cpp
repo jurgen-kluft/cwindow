@@ -57,13 +57,6 @@ namespace cwin
         data.mouseWheel = d;
     }
 
-    Event::Event(TouchData d, Window* window)
-        : type(EventType::Touch)
-        , window(window)
-    {
-        data.touch = d;
-    }
-
     Event::Event(GamepadData d, Window* window)
         : type(EventType::Gamepad)
         , window(window)
@@ -80,7 +73,7 @@ namespace cwin
 
     Event::~Event() {}
 
-    ResizeData::ResizeData(unsigned width, unsigned height, bool resizing)
+    ResizeData::ResizeData(unsigned int width, unsigned int height, bool resizing)
         : width(width)
         , height(height)
         , resizing(resizing)
@@ -93,11 +86,10 @@ namespace cwin
      * Though for certain platforms that natively support this
      * (Mac OS, iOS, WebAssembly) we should opt to use those functions.
      */
-    static const char* sKeyToCharMap[static_cast<size_t>(Key::KeysMax)] = {
-        "\x1B", "1", "2", "3", "4", "5", "6",  "7", "8", "9", "0", "-", "=", "\b", "\t", "Q", "W", "E",  "R", "T", "Y", "U", "I", "O", "P", "[", "]",
-        "\r",   "",  "A", "S", "D", "F", "G",  "H", "J", "K", "L", ";", ":", "'",  "\"", "`", "",  "\\", "Z", "X", "C", "V", "B", "N", "M", ",", ".",
-        "/",    "",  "*", "",  " ", "",  "",   "",  "",  "",  "",  "",  "",  "",   "",   "",  "",  "",   "7", "8", "9", "-", "4", "5", "6", "+", "1",
-        "2",    "3", "0", ".", "",  "",  "\r", "",  "/", "",  "",  "",  "",  "",   "",   "",  "",  "",   "",  "",  "",  "",  "",  "",  ""};
+    static const char* sKeyToCharMap[static_cast<size_t>(Key::KeysMax)] = {"\x1B", "1", "2", "3", "4", "5", "6",  "7", "8", "9", "0", "-", "=", "\b", "\t", "Q", "W", "E",  "R", "T", "Y", "U", "I", "O", "P", "[", "]",
+                                                                           "\r",   "",  "A", "S", "D", "F", "G",  "H", "J", "K", "L", ";", ":", "'",  "\"", "`", "",  "\\", "Z", "X", "C", "V", "B", "N", "M", ",", ".",
+                                                                           "/",    "",  "*", "",  " ", "",  "",   "",  "",  "",  "",  "",  "",  "",   "",   "",  "",  "",   "7", "8", "9", "-", "4", "5", "6", "+", "1",
+                                                                           "2",    "3", "0", ".", "",  "",  "\r", "",  "/", "",  "",  "",  "",  "",   "",   "",  "",  "",   "",  "",  "",  "",  "",  "",  ""};
 
     struct KeyStrToKey
     {
@@ -179,12 +171,22 @@ namespace cwin
 
     const char* convertKeyToString(Key key) { return sKeyToCharMap[static_cast<size_t>(key)]; }
 
+    static inline int compare_str(const char* s1, const char* s2)
+    {
+        while (*s1 && (*s1 == *s2))
+        {
+            s1++;
+            s2++;
+        }
+        return *(const unsigned char*)s1 - *(const unsigned char*)s2;
+    }
+
     Key convertStringToKey(const char* str)
     {
         int const num_keys = (int)(sizeof(sCharToKeyMap) / sizeof(sCharToKeyMap[0]));
         for (int i = 0; i < num_keys; i++)
         {
-            if (strcmp(str, sCharToKeyMap[i].m_str) == 0)
+            if (compare_str(str, sCharToKeyMap[i].m_str) == 0)
             {
                 return sCharToKeyMap[i].m_key;
             }
@@ -205,7 +207,7 @@ namespace cwin
     {
     }
 
-    MouseMoveData::MouseMoveData(unsigned x, unsigned y, unsigned screenx, unsigned screeny, int deltax, int deltay)
+    MouseMoveData::MouseMoveData(unsigned int x, unsigned int y, unsigned int screenx, unsigned int screeny, int deltax, int deltay)
         : x(x)
         , y(y)
         , screenx(screenx)

@@ -5,7 +5,6 @@
 #include "cwindow/windowdesc.h"
 
 #include <Windows.h>
-#include <unordered_map>
 
 #include <functional>
 
