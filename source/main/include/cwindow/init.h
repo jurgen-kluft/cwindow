@@ -5,7 +5,7 @@
 #if defined(CWINDOW_WIN32)
 #define MainArgs HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow
 #define MainArgsVars hInstance, hPrevInstance, lpCmdLine, nCmdShow
-#elif defined(CWINDOW_COCOA) || defined(CWINDOW_UIKIT)
+#elif defined(CWINDOW_DARWIN) || defined(CWINDOW_UIKIT)
 #define MainArgs int argc, const char *argv[], void *application
 #define MainArgsVars argc, argv, application
 #elif defined(CWINDOW_XCB)

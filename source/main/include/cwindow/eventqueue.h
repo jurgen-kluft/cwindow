@@ -4,7 +4,7 @@
 
 #ifdef CWINDOW_WIN32
 #include "cwindow/eventqueue_win32.h"
-#elif CWINDOW_COCOA
+#elif CWINDOW_DARWIN
 #include "cwindow/eventqueue_darwin.h"
 #elif CWINDOW_XLIB
 #include "cwindow/eventqueue_linux.h"
