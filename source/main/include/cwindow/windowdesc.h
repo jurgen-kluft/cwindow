@@ -4,45 +4,47 @@ namespace nwindow
 {
     struct WindowDesc
     {
+        WindowDesc();
+
         // Transform
 
-        long     x         = 0;      // Window X position based on Top Left
-        long     y         = 0;      // Window Y position based on Top Left
-        unsigned int width     = 1920;   // Window Width
-        unsigned int height    = 1080;   // Window Height
-        unsigned int minWidth  = 0;      // Window minimum width
-        unsigned int minHeight = 0;      // Window minimum height
-        unsigned int maxWidth  = 0xFFFF; // Window maximum width
-        unsigned int maxHeight = 0xFFFF; // Window maximum height
+        long         x;         // Window X position based on Top Left
+        long         y;         // Window Y position based on Top Left
+        unsigned int width;     // Window Width
+        unsigned int height;    // Window Height
+        unsigned int minWidth;  // Window minimum width
+        unsigned int minHeight; // Window minimum height
+        unsigned int maxWidth;  // Window maximum width
+        unsigned int maxHeight; // Window maximum height
 
         // Window Settings
 
-        bool centered      = true; // Should this window be centered on creation?
-        bool resizable     = true; // Whether this window is resizable
-        bool movable       = true; // Whether this window is movable
-        bool closable      = true; // Whether this window is closable
-        bool minimizable   = true; // Whether this window is minimizable
-        bool maximizable   = true; // whether this window is maximizable
-        bool canFullscreen = true; // Whether this window can be fullscreened
+        bool centered;      // Should this window be centered on creation?
+        bool resizable;     // Whether this window is resizable
+        bool movable;       // Whether this window is movable
+        bool closable;      // Whether this window is closable
+        bool minimizable;   // Whether this window is minimizable
+        bool maximizable;   // whether this window is maximizable
+        bool canFullscreen; // Whether this window can be fullscreened
 
         // Color and Style
 
-        unsigned int backgroundColor = 0xFFFFFFFF; // Hexidecimal background color (0xffffffff = white)
-        bool     transparent     = false;      // makes this window transparent
-        bool     frame           = true;       // does this window feature a frame?
-        bool     hasShadow       = true;       // if this window has a shadow
+        unsigned int backgroundColor; // Hexidecimal background color (0xffffffff = white)
+        bool         transparent;     // makes this window transparent
+        bool         frame;           // does this window feature a frame?
+        bool         hasShadow;       // if this window has a shadow
 
         // States
 
-        bool visible    = true;  // Is this window visible?
-        bool fullscreen = false; // Is this window full screen?
-        bool modal      = false; // Is this window a modal?
+        bool visible;    // Is this window visible?
+        bool fullscreen; // Is this window full screen?
+        bool modal;      // Is this window a modal?
 
         // App Data
 
-        const char* title    = "CrossWindow"; // Window Title
-        const char* name     = "XWinApp";     // Window name ID
-        const char* iconPath = "";            // Icon Path
+        const char* title;    // Window Title
+        const char* name;     // Window name ID
+        const char* iconPath; // Icon Path
     };
 
     struct UVec2
@@ -58,15 +60,15 @@ namespace nwindow
         template <typename T> UVec2 operator*(T b) const
         {
             UVec2 self = *this;
-            self.x     = static_cast<unsigned int >(static_cast<T>(self.x) * b);
-            self.y     = static_cast<unsigned int >(static_cast<T>(self.y) * b);
+            self.x     = static_cast<unsigned int>(static_cast<T>(self.x) * b);
+            self.y     = static_cast<unsigned int>(static_cast<T>(self.y) * b);
             return self;
         }
         template <typename T> UVec2 operator/(T b) const
         {
             UVec2 self = *this;
-            self.x     = static_cast<unsigned int >(static_cast<T>(self.x) / b);
-            self.y     = static_cast<unsigned int >(static_cast<T>(self.y) / b);
+            self.x     = static_cast<unsigned int>(static_cast<T>(self.x) / b);
+            self.y     = static_cast<unsigned int>(static_cast<T>(self.y) / b);
             return self;
         }
     };
