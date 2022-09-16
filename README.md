@@ -1,1 +1,3 @@
-# cgfx
+# cwindow
+
+Windowed application entry.
