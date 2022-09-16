@@ -4,7 +4,7 @@
 #include "cwindow/init.h"
 #include "cwindow/windowdesc.h"
 
-namespace cwin
+namespace nwindow
 {
     /**
      * Wrapper Window for a NSWindow and it's various children.
@@ -19,7 +19,7 @@ namespace cwin
         bool create(const WindowDesc& desc, EventQueue& eventQueue);
 
         // Get this Window's descriptor object.
-        cwin::WindowDesc getDesc();
+        WindowDesc getDesc();
 
         // Request that this window be closed.
         void close();
@@ -64,4 +64,4 @@ namespace cwin
         typedef Key MacKeycodeToDigitalInputMap[1 << (8 * sizeof(unsigned char))];
     };
 
-} // namespace cwin
+} // namespace nwindow

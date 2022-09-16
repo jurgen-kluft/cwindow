@@ -69,7 +69,7 @@
 @end
 
 
-namespace cwin
+namespace nwindow
 {	
 Window::Window()
 {

@@ -16,7 +16,7 @@ enum Style : DWORD
 
 HBRUSH hBrush = CreateSolidBrush(RGB(30, 30, 30));
 
-namespace cwin
+namespace nwindow
 {
     Window::Window(){};
 
@@ -351,4 +351,4 @@ void Window::setBackgroundColor(unsigned color)
             return result;
         return DefWindowProc(hwnd, msg, wparam, lparam);
     }
-} // namespace cwin
+} // namespace nwindow

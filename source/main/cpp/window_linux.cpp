@@ -1,6 +1,6 @@
 #include "XLibWindow.h"
 
-namespace cwin
+namespace nwindow
 {
     bool Window::create(const WindowDesc& desc, EventQueue& eventQueue)
     {
@@ -27,4 +27,4 @@ namespace cwin
     }
 
     bool Window::destroy() { XDestroyWindow(display, window); }
-} // namespace cwin
+} // namespace nwindow

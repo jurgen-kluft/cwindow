@@ -1,7 +1,7 @@
 #include "cwindow/dialogs_win32.h"
 #include "cwindow/dialogs.h"
 
-namespace cwin
+namespace nwindow
 {
     // https://docs.microsoft.com/en-us/windows/desktop/learnwin32/example--the-open-dialog-box
 
@@ -12,4 +12,4 @@ namespace cwin
         MessageBox(nullptr, LPCWSTR("Text"), LPCWSTR("Title"), flags);
     }
 
-} // namespace cwin
+} // namespace nwindow

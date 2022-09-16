@@ -16,8 +16,8 @@
 #define MainArgsVars argc, argv
 #endif
 
-namespace cwin
+namespace nwindow
 {
     bool init(MainArgs);
     const XWinState& getXWinState();
-} // namespace cwin
+} // namespace nwindow

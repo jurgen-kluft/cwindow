@@ -1,6 +1,6 @@
 #include "Dialogs.h"
 
-namespace cwin
+namespace nwindow
 {
     
 }

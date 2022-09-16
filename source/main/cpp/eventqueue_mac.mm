@@ -2,7 +2,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-namespace cwin
+namespace nwindow
 {
     void EventQueue::update()
     {

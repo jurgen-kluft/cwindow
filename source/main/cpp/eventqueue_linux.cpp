@@ -1,7 +1,7 @@
 #include "XLibEventQueue.h"
 #include "cwindow/window.h"
 
-namespace cwin
+namespace nwindow
 {
     void EventQueue::update()
     {
@@ -60,4 +60,4 @@ namespace cwin
             }
         }
     }
-} // namespace cwin
+} // namespace nwindow

@@ -1,76 +1,48 @@
 #pragma once
 
-/**
- * Initial window description
- */
-namespace cwin
+namespace nwindow
 {
     struct WindowDesc
     {
         // Transform
 
-        // Window X position based on Top Left
-        long x = 0;
-        // Window Y position based on Top Left
-        long y = 0;
-        // Window Width
-        unsigned width = 1920;
-        // Window Height
-        unsigned height = 1080;
-        // Window minimum width
-        unsigned minWidth = 0;
-        // Window minimum height
-        unsigned minHeight = 0;
-        // Window maximum width
-        unsigned maxWidth = 0xFFFF;
-        // Window maximum height
-        unsigned maxHeight = 0xFFFF;
+        long     x         = 0;      // Window X position based on Top Left
+        long     y         = 0;      // Window Y position based on Top Left
+        unsigned width     = 1920;   // Window Width
+        unsigned height    = 1080;   // Window Height
+        unsigned minWidth  = 0;      // Window minimum width
+        unsigned minHeight = 0;      // Window minimum height
+        unsigned maxWidth  = 0xFFFF; // Window maximum width
+        unsigned maxHeight = 0xFFFF; // Window maximum height
 
         // Window Settings
 
-        // Should this window be centered on creation?
-        bool centered = true;
-        // Whether this window is resizable
-        bool resizable = true;
-        // Whether this window is movable
-        bool movable = true;
-        // Whether this window is closable
-        bool closable = true;
-        // Whether this window is minimizable
-        bool minimizable = true;
-        // whether this window is maximizable
-        bool maximizable = true;
-        // Whether this window can be fullscreened
-        bool canFullscreen = true;
+        bool centered      = true; // Should this window be centered on creation?
+        bool resizable     = true; // Whether this window is resizable
+        bool movable       = true; // Whether this window is movable
+        bool closable      = true; // Whether this window is closable
+        bool minimizable   = true; // Whether this window is minimizable
+        bool maximizable   = true; // whether this window is maximizable
+        bool canFullscreen = true; // Whether this window can be fullscreened
 
         // Color and Style
 
-        // Hexidecimal background color (0xffffffff = white)
-        unsigned backgroundColor = 0xFFFFFFFF;
-        // makes this window transparent
-        bool transparent = false;
-        // does this window feature a frame?
-        bool frame = true;
-        // if this window has a shadow
-        bool hasShadow = true;
+        unsigned backgroundColor = 0xFFFFFFFF; // Hexidecimal background color (0xffffffff = white)
+        bool     transparent     = false;      // makes this window transparent
+        bool     frame           = true;       // does this window feature a frame?
+        bool     hasShadow       = true;       // if this window has a shadow
 
         // States
 
-        // Is this window visible?
-        bool visible = true;
-        // Is this window full screen?
-        bool fullscreen = false;
-        // Is this window a modal?
-        bool modal = false;
+        bool visible    = true;  // Is this window visible?
+        bool fullscreen = false; // Is this window full screen?
+        bool modal      = false; // Is this window a modal?
 
         // App Data
 
-        // Window Title
-        std::string title = "CrossWindow";
-        // Window name ID
-        std::string name = "XWinApp";
-        // Icon Path
-        std::string iconPath = "";
+        std::string title    = "CrossWindow"; // Window Title
+        std::string name     = "XWinApp";     // Window name ID
+        std::string iconPath = "";            // Icon Path
     };
 
     struct UVec2
@@ -98,4 +70,4 @@ namespace cwin
             return self;
         }
     };
-} // namespace cwin
+} // namespace nwindow

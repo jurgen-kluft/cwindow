@@ -23,7 +23,7 @@
 		postNotificationName:NSApplicationDidFinishLaunchingNotification
 		object:NSApp];
 	
-	const cwindow::XWinState& state = cwindow::getXWinState();
+	const nwindow::XWinState& state = nwindow::getXWinState();
 	cwindow_main(state.argc, (const char**)state.argv);
 }
 
@@ -36,7 +36,7 @@ int main(int argc, char** argv)
 	
 	NSApplication* applicationObject = [XWinApplication alloc];
 	
-	cwindow::init(argc, (const char**)argv, applicationObject);
+	nwindow::init(argc, (const char**)argv, applicationObject);
 
 	if ([applicationObject respondsToSelector:@selector(run)])
 	{

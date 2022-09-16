@@ -34,7 +34,7 @@ namespace
     RAWINPUTDEVICE rawInputDevice[1];
 }
 
-namespace cwin
+namespace nwindow
 {
     EventQueue::EventQueue() { initialized = false; }
 
@@ -584,4 +584,4 @@ namespace cwin
 
     bool   EventQueue::empty() { return mQueue.empty(); }
     size_t EventQueue::size() { return mQueue.size(); }
-} // namespace cwin
+} // namespace nwindow

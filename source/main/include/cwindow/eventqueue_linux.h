@@ -7,7 +7,7 @@
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 
-namespace cwin
+namespace nwindow
 {
     class Window;
 
@@ -19,4 +19,4 @@ namespace cwin
     protected:
         std::queue<Event> mQueue;
     };
-} // namespace cwin
+} // namespace nwindow

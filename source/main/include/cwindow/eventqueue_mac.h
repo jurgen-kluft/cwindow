@@ -4,7 +4,7 @@
 #include "cwindow/init.h"
 #include <queue>
 
-namespace cwin
+namespace nwindow
 {
     struct MacEvent
     {
@@ -26,4 +26,4 @@ namespace cwin
         void pushEvent(MacEvent me);
         std::queue<Event> mQueue;
     };
-} // namespace cwin
+} // namespace nwindow

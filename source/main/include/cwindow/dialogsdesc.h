@@ -1,6 +1,6 @@
 #pragma once
 
-namespace cwin
+namespace nwindow
 {
     enum class MessageType
     {
@@ -14,4 +14,4 @@ namespace cwin
     };
 
 
-} // namespace cwin
+} // namespace nwindow

@@ -6,7 +6,7 @@
 
 #include <queue>
 
-namespace cwin
+namespace nwindow
 {
     class Window;
 
@@ -43,4 +43,4 @@ namespace cwin
             /*VK_RBUTTON 0x02*/ Key::KeysMax,
             /*VK_CANCEL 0x03*/ Key::KeysMax};
     };
-} // namespace cwin
+} // namespace nwindow

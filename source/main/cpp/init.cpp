@@ -1,7 +1,7 @@
 #include "cwindow/init.h"
 #include "cwindow/state.h"
 
-namespace cwin
+namespace nwindow
 {
     namespace
     {
@@ -13,5 +13,7 @@ namespace cwin
         xWinState = XWinState(MainArgsVars);
         return true;
     }
-    const cwin::XWinState& getXWinState() { return xWinState; }
-} // namespace cwin
+
+    const nwindow::XWinState& getXWinState() { return xWinState; }
+    
+} // namespace nwindow

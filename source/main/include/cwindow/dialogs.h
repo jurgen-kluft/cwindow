@@ -2,8 +2,8 @@
 
 #include "cwindow/dialogsdesc.h"
 
-namespace cwin
+namespace nwindow
 {
     void showMessageBox(const MessageDesc& mdesc);
 
-} // namespace cwin
+} // namespace nwindow

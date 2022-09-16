@@ -8,7 +8,7 @@
 
 typedef Window XLibWindow;
 
-namespace cwin
+namespace nwindow
 {
     class Window
     {
@@ -22,4 +22,4 @@ namespace cwin
         Display*   display = nullptr;
         XLibWindow window;
     };
-} // namespace cwin
+} // namespace nwindow

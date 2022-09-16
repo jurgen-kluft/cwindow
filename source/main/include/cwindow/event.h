@@ -6,7 +6,7 @@
 // - winit by Pierre Krieger <https://github.com/tomaka/winit>
 // - W3's DOM Events
 // <https://dvcs.w3.org/hg/dom3events/raw-file/tip/html/DOM3-Events.html
-namespace cwin
+namespace nwindow
 {
     class Window;
 
@@ -365,4 +365,4 @@ namespace cwin
 
         bool operator==(const Event& other) const { return type == other.type && window == other.window; }
     };
-} // namespace cwin
+} // namespace nwindow

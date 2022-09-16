@@ -21,7 +21,7 @@ struct ITaskbarList3;
  *
  */
 
-namespace cwin
+namespace nwindow
 {
     class Window
     {
@@ -175,4 +175,4 @@ namespace cwin
 
     static thread_local Window*                           _windowBeingCreated = nullptr;
     static thread_local std::unordered_map<HWND, Window*> _hwndMap            = {};
-} // namespace cwin
+} // namespace nwindow

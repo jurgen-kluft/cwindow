@@ -8,7 +8,7 @@
 #include <X11/Xlib.h>
 #endif
 
-namespace cwin
+namespace nwindow
 {
     struct XWinState
     {
@@ -27,7 +27,7 @@ namespace cwin
             , nCmdShow(nCmdShow)
         {
         }
-#elif defined(CWINDOW_COCOA) || defined(CWINDOW_UIKIT)
+#elif defined(CWINDOW_DARWIN) || defined(CWINDOW_UIKIT)
 
         int          argc;
         const char** argv;
@@ -54,4 +54,4 @@ namespace cwin
 #endif
         XWinState() {}
     };
-} // namespace cwin
+} // namespace nwindow

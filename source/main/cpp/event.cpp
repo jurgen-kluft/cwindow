@@ -1,6 +1,6 @@
 #include "cwindow/event.h"
 
-namespace cwin
+namespace nwindow
 {
     Event::Event(EventType type, Window* window)
         : type(type)
@@ -246,4 +246,4 @@ namespace cwin
         : scale(scale)
     {
     }
-} // namespace cwin
+} // namespace nwindow
