@@ -1,4 +1,4 @@
-#include "Dialogs.h"
+#include "cwindow/dialogs.h"
 
 namespace nwindow
 {

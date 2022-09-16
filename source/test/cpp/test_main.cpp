@@ -68,6 +68,11 @@ namespace ncore
 ncore::alloc_t *gTestAllocator = nullptr;
 ncore::UnitTestAssertHandler gAssertHandler;
 
+void cwindow_main(int argc, const char** argv)
+{
+	
+}
+
 bool gRunUnitTest(UnitTest::TestReporter &reporter)
 {
 	cbase::init();

@@ -1,4 +1,4 @@
-#include "cwindow/eventqueue_darwin.h"
+#include "cwindow/eventqueue_mac.h"
 
 #import <Cocoa/Cocoa.h>
 
@@ -73,33 +73,33 @@ namespace nwindow
                         curEvent = Event(
                                         MouseInputData(
                                                         MouseInput::Left, ButtonState::Pressed,
-                                                        xwin::ModifierState(nsEvent.modifierFlags & NSEventModifierFlagControl, nsEvent.modifierFlags & NSEventModifierFlagOption,
+                                                        nwindow::ModifierState(nsEvent.modifierFlags & NSEventModifierFlagControl, nsEvent.modifierFlags & NSEventModifierFlagOption,
                                                                             nsEvent.modifierFlags & NSEventModifierFlagShift, nsEvent.modifierFlags & NSEventModifierFlagCommand)));
                         break;
                     case NSEventTypeLeftMouseUp:
-                        curEvent = xwin::Event(
-                                            xwin::MouseInputData(
+                        curEvent = nwindow::Event(
+                                            nwindow::MouseInputData(
                                                                     MouseInput::Left, ButtonState::Released,
-                                                                    xwin::ModifierState(nsEvent.modifierFlags & NSEventModifierFlagControl, nsEvent.modifierFlags & NSEventModifierFlagOption,
+                                                                    nwindow::ModifierState(nsEvent.modifierFlags & NSEventModifierFlagControl, nsEvent.modifierFlags & NSEventModifierFlagOption,
                                                                                         nsEvent.modifierFlags & NSEventModifierFlagShift, nsEvent.modifierFlags & NSEventModifierFlagCommand)));
                         break;
                     case NSEventTypeRightMouseDown:
-                        curEvent = xwin::Event(
-                                            xwin::MouseInputData(
+                        curEvent = nwindow::Event(
+                                            nwindow::MouseInputData(
                                                                     MouseInput::Right, ButtonState::Pressed,
-                                                                    xwin::ModifierState(nsEvent.modifierFlags & NSEventModifierFlagControl, nsEvent.modifierFlags & NSEventModifierFlagOption,
+                                                                    nwindow::ModifierState(nsEvent.modifierFlags & NSEventModifierFlagControl, nsEvent.modifierFlags & NSEventModifierFlagOption,
                                                                                         nsEvent.modifierFlags & NSEventModifierFlagShift, nsEvent.modifierFlags & NSEventModifierFlagCommand)));
                         break;
                     case NSEventTypeRightMouseUp:
-                        curEvent = xwin::Event(
-                                            xwin::MouseInputData(
+                        curEvent = nwindow::Event(
+                                            nwindow::MouseInputData(
                                                                     MouseInput::Right, ButtonState::Released,
-                                                                    xwin::ModifierState(nsEvent.modifierFlags & NSEventModifierFlagControl, nsEvent.modifierFlags & NSEventModifierFlagOption,
+                                                                    nwindow::ModifierState(nsEvent.modifierFlags & NSEventModifierFlagControl, nsEvent.modifierFlags & NSEventModifierFlagOption,
                                                                                         nsEvent.modifierFlags & NSEventModifierFlagShift, nsEvent.modifierFlags & NSEventModifierFlagCommand)));
                         break;
                     case NSEventTypeMouseMoved:
-                        curEvent = xwin::Event(
-                                            xwin::MouseMoveData(
+                        curEvent = nwindow::Event(
+                                            nwindow::MouseMoveData(
                                                                 static_cast<unsigned>(nsEvent.absoluteX), static_cast<unsigned>(nsEvent.absoluteY),
                                                                 static_cast<unsigned>(nsEvent.absoluteX), static_cast<unsigned>(nsEvent.absoluteY),
                                                                 static_cast<int>(nsEvent.deltaX),

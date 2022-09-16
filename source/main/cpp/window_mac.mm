@@ -1,4 +1,4 @@
-#include "cwindow/window_darwin.h"
+#include "cwindow/window_mac.h"
 
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/CAMetalLayer.h>
@@ -23,7 +23,7 @@
 
 - (void)_updateContentScale
 {
-	NSApplication* nsApp = (NSApplication*)xwin::getXWinState().application;
+	NSApplication* nsApp = (NSApplication*)nwindow::getXWinState().application;
     NSWindow *mainWindow = [NSApp mainWindow];
     NSWindow *layerWindow = [self window];
     if (mainWindow || layerWindow) {
@@ -116,10 +116,10 @@ bool Window::create(const WindowDesc& desc, EventQueue& eventQueue)
 			  backing: NSBackingStoreBuffered
 			  defer: NO];
 	
-	mTitle = [NSString stringWithCString:desc.title.c_str()
+	mTitle = [NSString stringWithCString:desc.title
 								encoding:[NSString defaultCStringEncoding]];
 	XWinWindow* w = ((XWinWindow*)window);
-	if(!desc.title.empty())
+	if(!desc.title)
 	{ [w setTitle: (NSString*)mTitle]; }
 	if(desc.centered)
 	{ [w center]; }

@@ -40,9 +40,9 @@ namespace nwindow
 
         // App Data
 
-        std::string title    = "CrossWindow"; // Window Title
-        std::string name     = "XWinApp";     // Window name ID
-        std::string iconPath = "";            // Icon Path
+        const char* title    = "CrossWindow"; // Window Title
+        const char* name     = "XWinApp";     // Window name ID
+        const char* iconPath = "";            // Icon Path
     };
 
     struct UVec2
