@@ -8,12 +8,12 @@ namespace nwindow
 
         long     x         = 0;      // Window X position based on Top Left
         long     y         = 0;      // Window Y position based on Top Left
-        unsigned width     = 1920;   // Window Width
-        unsigned height    = 1080;   // Window Height
-        unsigned minWidth  = 0;      // Window minimum width
-        unsigned minHeight = 0;      // Window minimum height
-        unsigned maxWidth  = 0xFFFF; // Window maximum width
-        unsigned maxHeight = 0xFFFF; // Window maximum height
+        unsigned int width     = 1920;   // Window Width
+        unsigned int height    = 1080;   // Window Height
+        unsigned int minWidth  = 0;      // Window minimum width
+        unsigned int minHeight = 0;      // Window minimum height
+        unsigned int maxWidth  = 0xFFFF; // Window maximum width
+        unsigned int maxHeight = 0xFFFF; // Window maximum height
 
         // Window Settings
 
@@ -27,7 +27,7 @@ namespace nwindow
 
         // Color and Style
 
-        unsigned backgroundColor = 0xFFFFFFFF; // Hexidecimal background color (0xffffffff = white)
+        unsigned int backgroundColor = 0xFFFFFFFF; // Hexidecimal background color (0xffffffff = white)
         bool     transparent     = false;      // makes this window transparent
         bool     frame           = true;       // does this window feature a frame?
         bool     hasShadow       = true;       // if this window has a shadow
@@ -47,9 +47,9 @@ namespace nwindow
 
     struct UVec2
     {
-        unsigned x;
-        unsigned y;
-        UVec2(unsigned x = 0, unsigned y = 0)
+        unsigned int x;
+        unsigned int y;
+        UVec2(unsigned int x = 0, unsigned int y = 0)
             : x(x)
             , y(y)
         {
@@ -58,15 +58,15 @@ namespace nwindow
         template <typename T> UVec2 operator*(T b) const
         {
             UVec2 self = *this;
-            self.x     = static_cast<unsigned>(static_cast<T>(self.x) * b);
-            self.y     = static_cast<unsigned>(static_cast<T>(self.y) * b);
+            self.x     = static_cast<unsigned int >(static_cast<T>(self.x) * b);
+            self.y     = static_cast<unsigned int >(static_cast<T>(self.y) * b);
             return self;
         }
         template <typename T> UVec2 operator/(T b) const
         {
             UVec2 self = *this;
-            self.x     = static_cast<unsigned>(static_cast<T>(self.x) / b);
-            self.y     = static_cast<unsigned>(static_cast<T>(self.y) / b);
+            self.x     = static_cast<unsigned int >(static_cast<T>(self.x) / b);
+            self.y     = static_cast<unsigned int >(static_cast<T>(self.y) / b);
             return self;
         }
     };

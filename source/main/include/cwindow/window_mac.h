@@ -25,7 +25,7 @@ namespace nwindow
         void close();
 
         // Set the mouse position in display space.
-        void setMousePosition(unsigned x, unsigned y);
+        void setMousePosition(unsigned int x, unsigned int y);
 
         // Get the size of the current display this window is in.
         UVec2 getCurrentDisplaySize();

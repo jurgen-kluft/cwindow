@@ -261,7 +261,7 @@ namespace nwindow
     // Data passed with mouse wheel events
     struct MouseWheelData
     {
-        double                 delta;
+        float                  delta;
         ModifierState          modifiers;
         static const EventType type = EventType::MouseWheel;
 
