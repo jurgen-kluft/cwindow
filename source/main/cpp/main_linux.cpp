@@ -1,11 +1,7 @@
 #include "cwindow/main.h"
 #include "cwindow/private/winstate_linux.h"
 
-#if defined(CWINDOW_XCB)
-#include <xcb/xcb.h>
-#elif defined(CWINDOW_LINUX)
 #include <X11/Xlib.h>
-#endif
 
 struct winstate_t
 {

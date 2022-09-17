@@ -1,4 +1,5 @@
 #include "cwindow/window_mac.h"
+#include "cwindow/private/winstate_mac.h"
 
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/CAMetalLayer.h>
@@ -23,7 +24,7 @@
 
 - (void)_updateContentScale
 {
-	NSApplication* nsApp = (NSApplication*)nwindow::getWinState().application;
+	NSApplication* nsApp = (NSApplication*)getWinState().application;
     NSWindow *mainWindow = [NSApp mainWindow];
     NSWindow *layerWindow = [self window];
     if (mainWindow || layerWindow) {
@@ -144,13 +145,8 @@ bool Window::create(const WindowDesc& desc, EventQueue& eventQueue)
 	[w setContentView:(XWinView*)view];
 	[w makeKeyAndOrderFront:nsApp];
 	
-	
-	eventQueue.update();
-	
+	eventQueue.pump();
 	mDesc = desc;
-	
-	
-	
 	return true;
 }
 

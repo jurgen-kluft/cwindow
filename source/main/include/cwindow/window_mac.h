@@ -1,7 +1,6 @@
 #pragma once
 
 #include "cwindow/eventqueue.h"
-#include "cwindow/init.h"
 #include "cwindow/windowdesc.h"
 
 namespace nwindow

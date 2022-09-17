@@ -6,7 +6,7 @@
 #include "cwindow/eventqueue_win32.h"
 #elif CWINDOW_DARWIN
 #include "cwindow/eventqueue_mac.h"
-#elif CWINDOW_XLIB
+#elif CWINDOW_LINUX
 #include "cwindow/eventqueue_linux.h"
 #else
 

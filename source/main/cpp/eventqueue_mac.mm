@@ -1,6 +1,7 @@
 #include "cwindow/eventqueue_mac.h"
 #include "cwindow/event.h"
-#include "cwindow/init.h"
+#include "cwindow/private/queue.h"
+#include "cwindow/private/winstate_mac.h"
 
 #import <Cocoa/Cocoa.h>
 
@@ -21,7 +22,7 @@ namespace nwindow
      * MacOS Events can be per window virtual functions or received from a queue.
      * Events - https://developer.apple.com/documentation/appkit/nsevent
      */
-    void EventQueue::update()
+    void EventQueue::pump()
     {
         // Update Application
         NSApplication* nsApp = (NSApplication*)getWinState().application;

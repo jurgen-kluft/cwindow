@@ -7,8 +7,6 @@ t2-output/
 target/
 Acid/
 tags
-units.lua
-tundra.lua
 
 #except the following files
 !.gitignore
@@ -23,7 +21,6 @@ tundra.lua
 !*.build
 
 !*.go
-!*.lua
 
 !*.cs
 !*.csproj

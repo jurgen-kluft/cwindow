@@ -26,7 +26,7 @@ const winstate_t& getWinState() { return g_winstate; }
 		postNotificationName:NSApplicationDidFinishLaunchingNotification
 		object:NSApp];
 	
-	const nwindow::winstate_t& state = g_winstate;
+	const winstate_t& state = g_winstate;
 	cwindow_main(state.argc, (const char**)state.argv);
 }
 
