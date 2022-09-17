@@ -36,5 +36,6 @@ tags
 !*.bat
 
 !*.md
+!*.png
 
 #except the following folders

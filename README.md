@@ -1,5 +1,7 @@
 # cwindow
 
+![image](cwindow_logo.png)
+
 Windowed application entry.
 
 ```c++
