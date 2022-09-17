@@ -12,6 +12,7 @@ namespace nwindow
         q->mSize  = size;
         q->mElemByteSize = sizeof(Event);
         q->mQueue = (u8*)malloc(sizeof(Event) * q->mSize * q->mElemByteSize);
+        return q;
     }
 
     void QueueDestroy(Queue* q)
