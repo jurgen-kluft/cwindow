@@ -1,11 +1,15 @@
 # cwindow
 
+A library that provides a Window/GUI application entry.
+
 ![image](cwindow_logo.png)
 
-Windowed application entry.
+# example
+
+Below an example of how to use this library.
 
 ```c++
-include "cwindow/c_window.h"
+#include "cwindow/c_window.h"
 
 void cwindow_main(int argc, const char** argv)
 {
@@ -22,9 +26,7 @@ void cwindow_main(int argc, const char** argv)
     cwin::EventQueue eventQueue;
 
     if (!window.create(windowDesc, eventQueue))
-    { 
         return; 
-    }
 
     bool close = false;
     while (!close)
