@@ -1,7 +1,11 @@
-#include "cwindow/init.h"
 #include "cwindow/main.h"
+#include "cwindow/private/winstate_win32.h"
 
+#include <Windows.h>
 #include <stdio.h>
+
+winstate_t g_winstate;
+const winstate_t& getWinState() { return g_winstate; }
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -59,7 +63,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         argv = NULL;
     }
 
-    nwindow::init(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+    g_winstate = winstate_t(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
     cwindow_main(argc, (const char**)argv);
 
     // Free up the items we had to allocate for the command line arguments.

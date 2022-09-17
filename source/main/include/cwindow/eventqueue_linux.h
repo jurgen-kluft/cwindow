@@ -1,22 +1,20 @@
 #pragma once
 
-#include "cwindow/event.h"
-
-#include <queue>
-
-#include <X11/Xlib.h>
-#include <X11/keysym.h>
-
 namespace nwindow
 {
-    class Window;
+    struct Queue;
+    class Event;
 
     class EventQueue
     {
     public:
-        void pushEvent(const XEvent* event, Window* window);
+        EventQueue();
+        ~EventQueue();
+        
+        void pump();
+        bool pop(Event& e);
 
     protected:
-        std::queue<Event> mQueue;
+        Queue* mQueue;
     };
 } // namespace nwindow

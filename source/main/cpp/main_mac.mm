@@ -1,5 +1,8 @@
-#include "cwindow/init.h"
 #include "cwindow/main.h"
+#include "cwindow/private/winstate_mac.h"
+
+winstate_t g_winstate;
+const winstate_t& getWinState() { return g_winstate; }
 
 #import <Cocoa/Cocoa.h>
 
@@ -23,7 +26,7 @@
 		postNotificationName:NSApplicationDidFinishLaunchingNotification
 		object:NSApp];
 	
-	const nwindow::XWinState& state = nwindow::getXWinState();
+	const nwindow::winstate_t& state = g_winstate;
 	cwindow_main(state.argc, (const char**)state.argv);
 }
 
@@ -36,7 +39,7 @@ int main(int argc, char** argv)
 	
 	NSApplication* applicationObject = [XWinApplication alloc];
 	
-	nwindow::init(argc, (const char**)argv, applicationObject);
+	g_winstate = winstate_t(argc, (const char**)argv, applicationObject);
 
 	if ([applicationObject respondsToSelector:@selector(run)])
 	{

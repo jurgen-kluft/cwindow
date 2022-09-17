@@ -1,13 +1,30 @@
 #include "cwindow/eventqueue_mac.h"
+#include "cwindow/event.h"
+#include "cwindow/init.h"
 
 #import <Cocoa/Cocoa.h>
 
 namespace nwindow
 {
+    // TODO this event queue code should be moved to window_mac.cpp, it would make the whole dependency chain a lot easier
+
+    EventQueue::EventQueue() 
+    { 
+        mQueue = QueueCreate(256);
+    }
+    EventQueue::~EventQueue() 
+    { 
+        QueueDestroy(mQueue);
+    }
+
+    /**
+     * MacOS Events can be per window virtual functions or received from a queue.
+     * Events - https://developer.apple.com/documentation/appkit/nsevent
+     */
     void EventQueue::update()
     {
         // Update Application
-        NSApplication* nsApp = (NSApplication*)getXWinState().application;
+        NSApplication* nsApp = (NSApplication*)getWinState().application;
         @autoreleasepool
         {
             NSEvent* nsEvent = nil;
@@ -100,8 +117,8 @@ namespace nwindow
                     case NSEventTypeMouseMoved:
                         curEvent = nwindow::Event(
                                             nwindow::MouseMoveData(
-                                                                static_cast<unsigned>(nsEvent.absoluteX), static_cast<unsigned>(nsEvent.absoluteY),
-                                                                static_cast<unsigned>(nsEvent.absoluteX), static_cast<unsigned>(nsEvent.absoluteY),
+                                                                static_cast<unsigned int>(nsEvent.absoluteX), static_cast<unsigned int>(nsEvent.absoluteY),
+                                                                static_cast<unsigned int>(nsEvent.absoluteX), static_cast<unsigned int>(nsEvent.absoluteY),
                                                                 static_cast<int>(nsEvent.deltaX),
                                                                 static_cast<int>(nsEvent.deltaY))
                                             );
@@ -115,7 +132,7 @@ namespace nwindow
                 }
                 if(curEvent.type != EventType::None)
                 {
-                    mQueue.push(curEvent);
+                    QueuePush(mQueue, curEvent);
                 }
                 
                 [NSApp sendEvent:nsEvent];
@@ -126,19 +143,6 @@ namespace nwindow
         [nsApp updateWindows];
     }
 
-    const Event& EventQueue::front()
-    {
-        return mQueue.front();
-    }
-
-    void EventQueue::pop()
-    {
-        mQueue.pop();
-    }
-
-    bool EventQueue::empty()
-    {
-        return mQueue.empty();
-    }
+    bool EventQueue::pop(Event& e) { return QueuePop(mQueue, e); }
 
 }

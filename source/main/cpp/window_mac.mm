@@ -23,7 +23,7 @@
 
 - (void)_updateContentScale
 {
-	NSApplication* nsApp = (NSApplication*)nwindow::getXWinState().application;
+	NSApplication* nsApp = (NSApplication*)nwindow::getWinState().application;
     NSWindow *mainWindow = [NSApp mainWindow];
     NSWindow *layerWindow = [self window];
     if (mainWindow || layerWindow) {
@@ -88,7 +88,7 @@ Window::~Window()
 
 bool Window::create(const WindowDesc& desc, EventQueue& eventQueue)
 {
-	NSApplication* nsApp = (NSApplication*)getXWinState().application;
+	NSApplication* nsApp = (NSApplication*)getWinState().application;
 	
 	NSRect rect = NSMakeRect(desc.x, desc.y, desc.width, desc.height);
 	NSWindowStyleMask styleMask = NSWindowStyleMaskTitled;

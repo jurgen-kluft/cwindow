@@ -1,4 +1,5 @@
 #include "cwindow/eventqueue_win32.h"
+#include "cwindow/private/queue.h"
 
 #include "cwindow/window.h"
 
@@ -29,16 +30,23 @@
  * Win32 is a bit unweildy, so there's a couple of global
  * objects that we need to keep around. ~ alain
  */
-namespace
-{
-    RAWINPUTDEVICE rawInputDevice[1];
-}
 
 namespace nwindow
 {
-    EventQueue::EventQueue() { initialized = false; }
+    RAWINPUTDEVICE rawInputDevice[1];
 
-    void EventQueue::update()
+    EventQueue::EventQueue() 
+    { 
+        mQueue = QueueCreate(256);
+        initialized = false; 
+    }
+    EventQueue::~EventQueue() 
+    { 
+        QueueDestroy(mQueue);
+        initialized = false; 
+    }
+
+    void EventQueue::pump()
     {
         MSG msg = {};
 
@@ -50,11 +58,12 @@ namespace nwindow
         }
     }
 
-    LRESULT EventQueue::pushEvent(MSG msg, Window* window)
+    lresult_t EventQueue::pushEvent(MSG msg, Window* window)
     {
-        UINT    message           = msg.message;
-        LRESULT result            = 0;
-        RECT    currentWindowRect = {-1, -1, -1, -1};
+        UINT      message           = msg.message;
+        lresult_t result            = 0;
+        RECT      currentWindowRect = {-1, -1, -1, -1};
+
         // TODO: hwnd to nwindow::Window unordered_map, when nwindow::Window closes, it
         // sends a message to the event queue to remove that hwnd
         // and any remaining events that match that nwindow::Window
@@ -121,51 +130,39 @@ namespace nwindow
             case WM_MOUSEWHEEL:
             {
                 short modifiers = LOWORD(msg.wParam);
-                e               = nwindow::Event(nwindow::MouseWheelData(GET_WHEEL_DELTA_WPARAM(msg.wParam) / WHEEL_DELTA,
-                                                                   nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)),
-                                              window);
+                e               = nwindow::Event(nwindow::MouseWheelData(GET_WHEEL_DELTA_WPARAM(msg.wParam) / WHEEL_DELTA, nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)), window);
                 break;
             }
             case WM_LBUTTONDOWN:
             {
                 short modifiers = LOWORD(msg.wParam);
-                e               = nwindow::Event(nwindow::MouseInputData(MouseInput::Left, ButtonState::Pressed,
-                                                                   nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)),
-                                              window);
+                e               = nwindow::Event(nwindow::MouseInputData(MouseInput::Left, ButtonState::Pressed, nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)), window);
                 break;
             }
             case WM_MBUTTONDOWN:
             {
                 short modifiers = LOWORD(msg.wParam);
-                e               = nwindow::Event(nwindow::MouseInputData(MouseInput::Middle, ButtonState::Pressed,
-                                                                   nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)),
-                                              window);
+                e               = nwindow::Event(nwindow::MouseInputData(MouseInput::Middle, ButtonState::Pressed, nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)), window);
                 break;
             }
             case WM_RBUTTONDOWN:
             {
                 short modifiers = LOWORD(msg.wParam);
-                e               = nwindow::Event(nwindow::MouseInputData(MouseInput::Right, ButtonState::Pressed,
-                                                                   nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)),
-                                              window);
+                e               = nwindow::Event(nwindow::MouseInputData(MouseInput::Right, ButtonState::Pressed, nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)), window);
                 break;
             }
             case WM_XBUTTONDOWN:
             {
                 short modifiers = LOWORD(msg.wParam);
                 short x         = HIWORD(msg.wParam);
-                e               = nwindow::Event(nwindow::MouseInputData(x & XBUTTON1 ? MouseInput::Button4 : MouseInput::Button5, ButtonState::Pressed,
-                                                                   nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)),
-                                              window);
+                e = nwindow::Event(nwindow::MouseInputData(x & XBUTTON1 ? MouseInput::Button4 : MouseInput::Button5, ButtonState::Pressed, nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)), window);
                 break;
             }
             case WM_XBUTTONUP:
             {
                 short modifiers = LOWORD(msg.wParam);
                 short x         = HIWORD(msg.wParam);
-                e               = nwindow::Event(nwindow::MouseInputData(x & XBUTTON1 ? MouseInput::Button4 : MouseInput::Button5, ButtonState::Released,
-                                                                   nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)),
-                                              window);
+                e = nwindow::Event(nwindow::MouseInputData(x & XBUTTON1 ? MouseInput::Button4 : MouseInput::Button5, ButtonState::Released, nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)), window);
                 break;
             }
             case WM_LBUTTONDBLCLK:
@@ -174,25 +171,19 @@ namespace nwindow
             case WM_LBUTTONUP:
             {
                 short modifiers = LOWORD(msg.wParam);
-                e               = nwindow::Event(nwindow::MouseInputData(MouseInput::Left, ButtonState::Released,
-                                                                   nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)),
-                                              window);
+                e               = nwindow::Event(nwindow::MouseInputData(MouseInput::Left, ButtonState::Released, nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)), window);
                 break;
             }
             case WM_MBUTTONUP:
             {
                 short modifiers = LOWORD(msg.wParam);
-                e               = nwindow::Event(nwindow::MouseInputData(MouseInput::Middle, ButtonState::Released,
-                                                                   nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)),
-                                              window);
+                e               = nwindow::Event(nwindow::MouseInputData(MouseInput::Middle, ButtonState::Released, nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)), window);
                 break;
             }
             case WM_RBUTTONUP:
             {
                 short modifiers = LOWORD(msg.wParam);
-                e               = nwindow::Event(nwindow::MouseInputData(MouseInput::Right, ButtonState::Released,
-                                                                   nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)),
-                                              window);
+                e               = nwindow::Event(nwindow::MouseInputData(MouseInput::Right, ButtonState::Released, nwindow::ModifierState(modifiers & MK_CONTROL, modifiers & MK_ALT, modifiers & MK_SHIFT, modifiers & 0)), window);
                 break;
             }
             case WM_INPUT:
@@ -214,14 +205,12 @@ namespace nwindow
                 if (raw->header.dwType == RIM_TYPEKEYBOARD)
                 {
 
-                    raw->data.keyboard.MakeCode, raw->data.keyboard.Flags, raw->data.keyboard.Reserved, raw->data.keyboard.ExtraInformation, raw->data.keyboard.Message,
-                        raw->data.keyboard.VKey;
+                    raw->data.keyboard.MakeCode, raw->data.keyboard.Flags, raw->data.keyboard.Reserved, raw->data.keyboard.ExtraInformation, raw->data.keyboard.Message, raw->data.keyboard.VKey;
                 }
                 else if (raw->header.dwType == RIM_TYPEMOUSE)
                 {
 
-                    raw->data.mouse.usFlags, raw->data.mouse.ulButtons, raw->data.mouse.usButtonFlags, raw->data.mouse.usButtonData, raw->data.mouse.ulRawButtons,
-                        raw->data.mouse.lLastX, raw->data.mouse.lLastY, raw->data.mouse.ulExtraInformation;
+                    raw->data.mouse.usFlags, raw->data.mouse.ulButtons, raw->data.mouse.usButtonFlags, raw->data.mouse.usButtonData, raw->data.mouse.ulRawButtons, raw->data.mouse.lLastX, raw->data.mouse.lLastY, raw->data.mouse.ulExtraInformation;
 
                     e = nwindow::Event(nwindow::MouseRawData(static_cast<int>(raw->data.mouse.lLastX), static_cast<int>(raw->data.mouse.lLastY)), window);
 
@@ -292,10 +281,9 @@ namespace nwindow
                     }
                 }*/
 
-                e          = nwindow::Event(nwindow::MouseMoveData(static_cast<unsigned>(area.left <= x && x <= area.right ? x - area.left : 0xFFFFFFFF),
-                                                             static_cast<unsigned>(area.top <= y && y <= area.bottom ? y - area.top : 0xFFFFFFFF), static_cast<unsigned>(x),
-                                                             static_cast<unsigned>(y), static_cast<int>(x - prevMouseX), static_cast<int>(y - prevMouseY)),
-                                         window);
+                e = nwindow::Event(nwindow::MouseMoveData(static_cast<unsigned>(area.left <= x && x <= area.right ? x - area.left : 0xFFFFFFFF), static_cast<unsigned>(area.top <= y && y <= area.bottom ? y - area.top : 0xFFFFFFFF), static_cast<unsigned>(x),
+                                                          static_cast<unsigned>(y), static_cast<int>(x - prevMouseX), static_cast<int>(y - prevMouseY)),
+                                   window);
                 prevMouseX = static_cast<unsigned>(x);
                 prevMouseY = static_cast<unsigned>(y);
                 break;
@@ -562,26 +550,20 @@ namespace nwindow
         }
         if (e.type != EventType::None)
         {
-            mQueue.emplace(e);
+            QueuePush(mQueue, e);
             window->executeEventCallback(e);
         }
 
         // Some events may require resizing the current window,
         // such as DPI events.
-        if (!(currentWindowRect.right == currentWindowRect.left && currentWindowRect.right == currentWindowRect.top && currentWindowRect.right == currentWindowRect.bottom &&
-              currentWindowRect.right == -1))
+        if (!(currentWindowRect.right == currentWindowRect.left && currentWindowRect.right == currentWindowRect.top && currentWindowRect.right == currentWindowRect.bottom && currentWindowRect.right == -1))
         {
             RECT* const prcNewWindow = (RECT*)msg.lParam;
-            SetWindowPos(window->hwnd, NULL, currentWindowRect.left, currentWindowRect.top, currentWindowRect.right - currentWindowRect.left,
-                         currentWindowRect.bottom - currentWindowRect.top, SWP_NOZORDER | SWP_NOACTIVATE);
+            SetWindowPos(window->hwnd, NULL, currentWindowRect.left, currentWindowRect.top, currentWindowRect.right - currentWindowRect.left, currentWindowRect.bottom - currentWindowRect.top, SWP_NOZORDER | SWP_NOACTIVATE);
         }
         return result;
     }
 
-    const Event& EventQueue::front() { return mQueue.front(); }
+    bool EventQueue::pop(Event& e) { return QueuePop(mQueue, e); }
 
-    void EventQueue::pop() { mQueue.pop(); }
-
-    bool   EventQueue::empty() { return mQueue.empty(); }
-    size_t EventQueue::size() { return mQueue.size(); }
 } // namespace nwindow

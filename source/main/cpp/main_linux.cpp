@@ -1,9 +1,30 @@
-#include "cwindow/init.h"
 #include "cwindow/main.h"
+#include "cwindow/private/winstate_linux.h"
+
+#if defined(CWINDOW_XCB)
+#include <xcb/xcb.h>
+#elif defined(CWINDOW_LINUX)
+#include <X11/Xlib.h>
+#endif
+
+struct winstate_t
+{
+    int          argc;
+    const char** argv;
+
+    winstate_t(int argc, const char** argv)
+        : argc(argc)
+        , argv(argv)
+    {
+    }
+};
+
+static winstate_t g_winstate;
+const winstate_t& getWinState() { return g_winstate; }
 
 int main(int argc, char** argv)
 {
-    cwindow::init(argc, argv);
+    g_winstate = winstate_t(argc, (const char**)argv);
     cwindow_main(argc, argv);
 
     XDestroyWindow(display, xlib_window);

@@ -1,7 +1,10 @@
 #include "cwindow/window_win32.h"
+#include "cwindow/private/winstate_win32.h"
 
 #include "Shobjidl.h"
 #include "dwmapi.h"
+
+#include <Windows.h>
 #include <windowsx.h>
 
 #pragma comment(lib, "dwmapi.lib")
@@ -13,8 +16,6 @@ enum Style : DWORD
     aero_borderless = WS_POPUP | WS_THICKFRAME,
     basicBorderless = WS_CAPTION | WS_OVERLAPPED | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX
 };
-
-HBRUSH hBrush = CreateSolidBrush(RGB(30, 30, 30));
 
 namespace nwindow
 {
@@ -32,8 +33,8 @@ namespace nwindow
 
     bool Window::create(const WindowDesc& desc, EventQueue& eventQueue)
     {
-        mEventQueue                = &eventQueue;
-        const XWinState& xwinState = getXWinState();
+        q                = &eventQueue;
+        const XWinState& xwinState = getWinState();
 
         hinstance               = xwinState.hInstance;
         HINSTANCE hPrevInstance = xwinState.hPrevInstance;
@@ -50,7 +51,7 @@ namespace nwindow
         wndClass.hInstance     = hinstance;
         wndClass.hIcon         = LoadIcon(NULL, IDI_APPLICATION);
         wndClass.hCursor       = LoadCursor(NULL, IDC_ARROW);
-        wndClass.hbrBackground = hBrush;
+        wndClass.hbrBackground = CreateSolidBrush(RGB(30, 30, 30));;
         wndClass.lpszMenuName  = NULL;
         wndClass.lpszClassName = mDesc.name.c_str();
         wndClass.hIconSm       = LoadIcon(NULL, IDI_WINLOGO);
@@ -140,8 +141,8 @@ namespace nwindow
                 windowRect.bottom = MulDiv(windowRect.bottom, iDpi, USER_DEFAULT_SCREEN_DPI);
                 windowRect.right  = MulDiv(windowRect.right, iDpi, USER_DEFAULT_SCREEN_DPI);
             }
-            unsigned x = (GetSystemMetrics(SM_CXSCREEN) - windowRect.right) / 2;
-            unsigned y = (GetSystemMetrics(SM_CYSCREEN) - windowRect.bottom) / 2;
+            u32 x = (GetSystemMetrics(SM_CXSCREEN) - windowRect.right) / 2;
+            u32 y = (GetSystemMetrics(SM_CYSCREEN) - windowRect.bottom) / 2;
 
             // Center on screen
             SetWindowPos(hwnd, 0, x, y, windowRect.right, windowRect.bottom, 0);
@@ -205,12 +206,12 @@ namespace nwindow
         }
     }
 
-    void Window::trackEventsAsync(const std::function<void(const xwin::Event e)>& fun) { mCallback = fun; }
+    void Window::trackEventsAsync(const std::function<void(const nwindow::Event e)>& fun) { mCallback = fun; }
 
     void Window::setProgress(float progress)
     {
-        unsigned max = 10000;
-        unsigned cur = (unsigned)(progress * (float)max);
+        u32 max = 10000;
+        u32 cur = (u32)(progress * (float)max);
         mTaskbarList->SetProgressValue(hwnd, cur, max);
     }
 
@@ -239,14 +240,14 @@ namespace nwindow
         SetWindowText(hwnd, mDesc.title.c_str());
     }
 
-    void Window::setPosition(unsigned x, unsigned y)
+    void Window::setPosition(u32 x, u32 y)
     {
         SetWindowPos(hwnd, 0, x, y, 0, 0, SWP_NOZORDER | SWP_NOSIZE);
         mDesc.x = x;
         mDesc.y = y;
     }
 
-    void Window::setSize(unsigned width, unsigned height)
+    void Window::setSize(u32 width, u32 height)
     {
         RECT rect, frame, border;
         GetWindowRect(hwnd, &rect);
@@ -263,12 +264,12 @@ namespace nwindow
     }
 
     // clang-format off
-unsigned Window::getBackgroundColor()
+u32 Window::getBackgroundColor()
 {
     return mBackgroundColor;
 }
 
-void Window::setBackgroundColor(unsigned color)
+void Window::setBackgroundColor(u32 color)
 {
     mBackgroundColor = color;
 }
@@ -294,7 +295,7 @@ void Window::setBackgroundColor(unsigned color)
     {
         int   screenWidth  = GetSystemMetrics(SM_CXSCREEN);
         int   screenHeight = GetSystemMetrics(SM_CYSCREEN);
-        UVec2 r            = UVec2(static_cast<unsigned>(screenWidth), static_cast<unsigned>(screenHeight));
+        UVec2 r            = UVec2(static_cast<u32>(screenWidth), static_cast<u32>(screenHeight));
         return r;
     }
 
@@ -306,13 +307,13 @@ void Window::setBackgroundColor(unsigned color)
         return r;
     }
 
-    void Window::setMousePosition(unsigned x, unsigned y) { SetCursorPos(x, y); }
+    void Window::setMousePosition(u32 x, u32 y) { SetCursorPos(x, y); }
 
     HINSTANCE Window::getHinstance() { return hinstance; }
 
     HWND Window::getHwnd() { return hwnd; }
 
-    void Window::executeEventCallback(const xwin::Event e)
+    void Window::executeEventCallback(const nwindow::Event e)
     {
         if (mCallback)
             mCallback(e);
@@ -346,7 +347,7 @@ void Window::setBackgroundColor(unsigned color)
         message.message = msg;
         message.time    = 0;
 
-        LRESULT result = mEventQueue->pushEvent(message, this);
+        LRESULT result = q->pushEvent(message, this);
         if (result > 0)
             return result;
         return DefWindowProc(hwnd, msg, wparam, lparam);

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "cwindow/c_types.h"
+
 namespace nwindow
 {
     struct WindowDesc
@@ -8,14 +10,14 @@ namespace nwindow
 
         // Transform
 
-        long         x;         // Window X position based on Top Left
-        long         y;         // Window Y position based on Top Left
-        unsigned int width;     // Window Width
-        unsigned int height;    // Window Height
-        unsigned int minWidth;  // Window minimum width
-        unsigned int minHeight; // Window minimum height
-        unsigned int maxWidth;  // Window maximum width
-        unsigned int maxHeight; // Window maximum height
+        s32 x;         // Window X position based on Top Left
+        s32 y;         // Window Y position based on Top Left
+        u32 width;     // Window Width
+        u32 height;    // Window Height
+        u32 minWidth;  // Window minimum width
+        u32 minHeight; // Window minimum height
+        u32 maxWidth;  // Window maximum width
+        u32 maxHeight; // Window maximum height
 
         // Window Settings
 
@@ -29,10 +31,10 @@ namespace nwindow
 
         // Color and Style
 
-        unsigned int backgroundColor; // Hexidecimal background color (0xffffffff = white)
-        bool         transparent;     // makes this window transparent
-        bool         frame;           // does this window feature a frame?
-        bool         hasShadow;       // if this window has a shadow
+        u32  backgroundColor; // Hexidecimal background color (0xffffffff = white)
+        bool transparent;     // makes this window transparent
+        bool frame;           // does this window feature a frame?
+        bool hasShadow;       // if this window has a shadow
 
         // States
 
@@ -49,9 +51,10 @@ namespace nwindow
 
     struct UVec2
     {
-        unsigned int x;
-        unsigned int y;
-        UVec2(unsigned int x = 0, unsigned int y = 0)
+        u32 x;
+        u32 y;
+        
+        UVec2(u32 x = 0, u32 y = 0)
             : x(x)
             , y(y)
         {
@@ -60,15 +63,15 @@ namespace nwindow
         template <typename T> UVec2 operator*(T b) const
         {
             UVec2 self = *this;
-            self.x     = static_cast<unsigned int>(static_cast<T>(self.x) * b);
-            self.y     = static_cast<unsigned int>(static_cast<T>(self.y) * b);
+            self.x     = static_cast<u32>(static_cast<T>(self.x) * b);
+            self.y     = static_cast<u32>(static_cast<T>(self.y) * b);
             return self;
         }
         template <typename T> UVec2 operator/(T b) const
         {
             UVec2 self = *this;
-            self.x     = static_cast<unsigned int>(static_cast<T>(self.x) / b);
-            self.y     = static_cast<unsigned int>(static_cast<T>(self.y) / b);
+            self.x     = static_cast<u32>(static_cast<T>(self.x) / b);
+            self.y     = static_cast<u32>(static_cast<T>(self.y) / b);
             return self;
         }
     };
