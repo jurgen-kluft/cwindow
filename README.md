@@ -1,4 +1,4 @@
-# cwindow
+# cwindow (WIP)
 
 A library that provides a Window/GUI application entry.
 
