@@ -34,7 +34,7 @@ void cwindow_main(int argc, const char** argv)
         // Pump the event queue
         eventQueue.pump();
 
-        // Iterate through that queue
+        // Handle events by draining the event queue
         cwin::Event event;
         while (!eventQueue.pop(event))
         {
