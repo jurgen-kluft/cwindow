@@ -1,6 +1,8 @@
 #include "cwindow/window_mac.h"
 #include "cwindow/private/winstate_mac.h"
 
+extern winstate_t g_winstate;
+
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/CAMetalLayer.h>
 #import <QuartzCore/CAOpenGLLayer.h>
@@ -24,7 +26,7 @@
 
 - (void)_updateContentScale
 {
-	NSApplication* nsApp = (NSApplication*)getWinState().application;
+	NSApplication* nsApp = (NSApplication*)g_winstate.application;
     NSWindow *mainWindow = [NSApp mainWindow];
     NSWindow *layerWindow = [self window];
     if (mainWindow || layerWindow) {

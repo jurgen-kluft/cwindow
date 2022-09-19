@@ -1,10 +1,11 @@
 #pragma once
 
 #include "cwindow/c_types.h"
-#include "cwindow/event.h"
 
 namespace nwindow
 {
+    class Event;
+
     struct Queue 
     {
         u8*   mQueue;

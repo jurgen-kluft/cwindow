@@ -6,7 +6,6 @@
 namespace nwindow
 {
     struct Queue;
-    class Window;
 
     class EventQueue
     {
@@ -18,14 +17,7 @@ namespace nwindow
         bool pop(Event& e);
         void push(Event& e);
 
-        lresult_t pushEvent(msg_t msg, Window* window);
-
     protected:
-        bool initialized;
-
-        unsigned prevMouseX;
-        unsigned prevMouseY;
-
         Queue* mQueue;
 
     };

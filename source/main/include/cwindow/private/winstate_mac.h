@@ -20,5 +20,3 @@ struct winstate_t
     {
     }
 };
-
-const winstate_t& getWinState();

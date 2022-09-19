@@ -1,11 +1,11 @@
 #include "cwindow/main.h"
-#include "cwindow/private/winstate_win32.h"
 
 #include <Windows.h>
 #include <stdio.h>
 
+#include "cwindow/private/winstate_win32.h"
+
 winstate_t g_winstate;
-const winstate_t& getWinState() { return g_winstate; }
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {

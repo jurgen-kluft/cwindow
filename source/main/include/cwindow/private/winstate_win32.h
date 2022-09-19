@@ -2,9 +2,9 @@
 
 struct winstate_t
 {
-    void*       hInstance;
-    void*       hPrevInstance;
-    const char* lpCmdLine;
+    HINSTANCE   hInstance;
+    HINSTANCE   hPrevInstance;
+    LPSTR       lpCmdLine;
     int         nCmdShow;
 
     winstate_t()
@@ -15,7 +15,7 @@ struct winstate_t
     {
     }
 
-    winstate_t(void* hInstance, void* hPrevInstance, const char* lpCmdLine, int nCmdShow)
+    winstate_t(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
         : hInstance(hInstance)
         , hPrevInstance(hPrevInstance)
         , lpCmdLine(lpCmdLine)
@@ -23,5 +23,3 @@ struct winstate_t
     {
     }
 };
-
-const winstate_t& getWinState();

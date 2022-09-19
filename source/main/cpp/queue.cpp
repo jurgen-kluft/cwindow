@@ -1,4 +1,6 @@
 #include "cwindow/private/queue.h"
+#include "cwindow/event.h"
+
 #include <string>
 
 namespace nwindow

@@ -1,4 +1,4 @@
-#include "cwindow/dialogs_win32.h"
+#include "cwindow/private/dialogs_win32.h"
 #include "cwindow/dialogs.h"
 
 namespace nwindow
@@ -9,7 +9,7 @@ namespace nwindow
     {
         UINT flags = MB_APPLMODAL | MB_SETFOREGROUND | MB_ICONINFORMATION;
         flags |= MB_OK;
-        MessageBox(nullptr, LPCWSTR("Text"), LPCWSTR("Title"), flags);
+        MessageBoxA(nullptr, LPCSTR("Text"), LPCSTR("Title"), flags);
     }
 
 } // namespace nwindow

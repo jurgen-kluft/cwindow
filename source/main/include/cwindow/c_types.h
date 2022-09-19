@@ -11,12 +11,4 @@ namespace nwindow
     typedef ncore::s8  s8;
     typedef ncore::u8  u8;
 
-#if defined(CWINDOW_WIN32)
-    typedef u64   hinstance_t;
-    typedef void* hwnd_t;
-    typedef u64   lparam_t;
-    typedef u64   wparam_t;
-    typedef void* msg_t;
-    typedef s32   lresult_t;
-#endif
 } // namespace nwindow
