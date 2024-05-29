@@ -1,5 +1,5 @@
-#include "cwindow/window_mac.h"
-#include "cwindow/private/winstate_mac.h"
+#include "cwindow/c_window_mac.h"
+#include "cwindow/private/c_winstate_mac.h"
 
 extern winstate_t g_winstate;
 
@@ -73,7 +73,7 @@ extern winstate_t g_winstate;
 
 
 namespace nwindow
-{	
+{
 Window::Window()
 {
 	window =
@@ -92,7 +92,7 @@ Window::~Window()
 bool Window::create(const WindowDesc& desc, EventQueue& eventQueue)
 {
 	NSApplication* nsApp = (NSApplication*)getWinState().application;
-	
+
 	NSRect rect = NSMakeRect(desc.x, desc.y, desc.width, desc.height);
 	NSWindowStyleMask styleMask = NSWindowStyleMaskTitled;
 	if (desc.closable)
@@ -111,14 +111,14 @@ bool Window::create(const WindowDesc& desc, EventQueue& eventQueue)
 	{
 		styleMask |= NSWindowStyleMaskFullSizeContentView;
 	}
-	
+
 	// Setup NSWindow
 	window = [[XWinWindow alloc]
 			  initWithContentRect: rect
 			  styleMask: styleMask
 			  backing: NSBackingStoreBuffered
 			  defer: NO];
-	
+
 	mTitle = [NSString stringWithCString:desc.title
 								encoding:[NSString defaultCStringEncoding]];
 	XWinWindow* w = ((XWinWindow*)window);
@@ -132,7 +132,7 @@ bool Window::create(const WindowDesc& desc, EventQueue& eventQueue)
 		point  = [w convertPointToScreen:point];
 		[w setFrameOrigin: point];
 	}
-	
+
 	[w setHasShadow:desc.hasShadow];
 	[w setTitlebarAppearsTransparent:!desc.frame];
 
@@ -146,7 +146,7 @@ bool Window::create(const WindowDesc& desc, EventQueue& eventQueue)
 
 	[w setContentView:(XWinView*)view];
 	[w makeKeyAndOrderFront:nsApp];
-	
+
 	eventQueue.pump();
 	mDesc = desc;
 	return true;
@@ -162,7 +162,7 @@ void Window::close()
 	[(XWinWindow*)window release];
 	[(XWinView*)view release];
 	[(CALayer*)layer release];
-	
+
 	window = nullptr;
 	view = nullptr;
 	layer = nullptr;
@@ -174,7 +174,7 @@ void Window::setLayer(LayerType type)
 	{
 		XWinView* v = (XWinView*)view;
 		[v setWantsLayer:YES];
-		
+
 		layer = [[CAMetalLayer alloc] init];
 		CAMetalLayer* l = (CAMetalLayer*)layer;
 		[v setLayer:l];
@@ -182,7 +182,7 @@ void Window::setLayer(LayerType type)
 	}
 	else if(type == LayerType::OpenGL)
 	{
-		
+
 		XWinView* v = (XWinView*)view;
 		[v setWantsLayer:YES];
 		layer = [[CAOpenGLLayer alloc] init];

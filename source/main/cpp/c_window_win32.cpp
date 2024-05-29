@@ -1,6 +1,6 @@
-#include "cwindow/private/window_win32.h"
-#include "cwindow/private/eventqueue_win32.h"
-#include "cwindow/private/queue.h"
+#include "cwindow/private/c_window_win32.h"
+#include "cwindow/private/c_eventqueue.h"
+#include "cwindow/private/c_queue.h"
 
 #include "Shobjidl.h"
 #include "dwmapi.h"
@@ -9,7 +9,7 @@
 #include <Windows.h>
 #include <windowsx.h>
 
-#include "cwindow/private/winstate_win32.h"
+#include "cwindow/private/c_winstate_win32.h"
 
 #pragma comment(lib, "dwmapi.lib")
 #pragma comment(lib, "uxtheme.lib")

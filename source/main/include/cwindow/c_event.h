@@ -1,7 +1,5 @@
 #pragma once
 
-#include <stddef.h>
-
 // Events in CrossWindow are heavily influenced by:
 // - winit by Pierre Krieger <https://github.com/tomaka/winit>
 // - W3's DOM Events

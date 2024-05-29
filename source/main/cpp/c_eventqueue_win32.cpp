@@ -1,5 +1,5 @@
-#include "cwindow/private/eventqueue_win32.h"
-#include "cwindow/private/queue.h"
+#include "cwindow/private/c_eventqueue.h"
+#include "cwindow/private/c_queue.h"
 
 #include "Shobjidl.h"
 #include "dwmapi.h"
@@ -10,12 +10,12 @@
 
 namespace nwindow
 {
-    EventQueue::EventQueue() 
-    { 
+    EventQueue::EventQueue()
+    {
         mQueue = QueueCreate(256);
     }
-    EventQueue::~EventQueue() 
-    { 
+    EventQueue::~EventQueue()
+    {
         QueueDestroy(mQueue);
     }
 
@@ -32,5 +32,6 @@ namespace nwindow
     }
 
     bool EventQueue::pop(Event& e) { return QueuePop(mQueue, e); }
+    void EventQueue::push(Event &e) { QueuePush(mQueue, e); }
 
 } // namespace nwindow

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "cwindow/eventqueue.h"
-#include "cwindow/windowdesc.h"
+#include "cwindow/c_eventqueue.h"
+#include "cwindow/c_windowdesc.h"
 
 #include <X11/Xlib.h>
 

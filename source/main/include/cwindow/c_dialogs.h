@@ -1,6 +1,6 @@
 #pragma once
 
-#include "cwindow/dialogsdesc.h"
+#include "cwindow/c_dialogsdesc.h"
 
 namespace nwindow
 {

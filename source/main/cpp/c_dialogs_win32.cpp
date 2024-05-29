@@ -1,5 +1,5 @@
-#include "cwindow/private/dialogs_win32.h"
-#include "cwindow/dialogs.h"
+#include "cwindow/private/c_dialogs_win32.h"
+#include "cwindow/c_dialogs.h"
 
 namespace nwindow
 {

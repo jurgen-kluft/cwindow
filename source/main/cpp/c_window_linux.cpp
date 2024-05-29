@@ -1,4 +1,4 @@
-#include "XLibWindow.h"
+#include "cwindow/private/c_window_linux.h"
 
 namespace nwindow
 {

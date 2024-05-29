@@ -1,9 +1,9 @@
-#include "cwindow/main.h"
+#include "cwindow/c_main.h"
 
 #include <Windows.h>
 #include <stdio.h>
 
-#include "cwindow/private/winstate_win32.h"
+#include "cwindow/private/c_winstate_win32.h"
 
 winstate_t g_winstate;
 

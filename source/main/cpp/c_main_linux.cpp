@@ -1,5 +1,5 @@
-#include "cwindow/main.h"
-#include "cwindow/private/winstate_linux.h"
+#include "cwindow/c_main.h"
+#include "cwindow/private/c_winstate_linux.h"
 
 #include <X11/Xlib.h>
 
