@@ -305,7 +305,7 @@ namespace nwindow
         AnalogInputsMax
     };
 
-    typedef const char* AnalogToStringMap[static_cast<size_t>(AnalogInput::AnalogInputsMax)];
+    typedef const char* AnalogToStringMap[static_cast<int>(AnalogInput::AnalogInputsMax)];
 
     // Data passed for gamepad events
     struct GamepadData

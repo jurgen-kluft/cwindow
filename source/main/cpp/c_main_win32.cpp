@@ -11,18 +11,14 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 {
 #ifdef _DEBUG
     AllocConsole();
-    FILE* pCout;
-    FILE* pCerr;
+    FILE* pCout = nullptr;
+    FILE* pCerr = nullptr;
     freopen_s(&pCout, "CONOUT$", "w+", stdout);
     freopen_s(&pCerr, "CONOUT$", "w+", stderr);
 #endif
-    // setup cmdline
-    MSG    msg; // message
+    // Setup command line arguments.
     int    argc;
     char** argv;
-
-    // Ensure wParam is initialized.
-    msg.wParam = 0;
 
     // Use the CommandLine functions to get the command line arguments.
     // Unfortunately, Microsoft outputs
@@ -81,8 +77,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 #ifdef _DEBUG
     FreeConsole();
-    fclose(pCout);
-    fclose(pCerr);
+    if (pCout != nullptr) fclose(pCout);
+    if (pCerr != nullptr) fclose(pCerr);
 #endif
 
     return 0;

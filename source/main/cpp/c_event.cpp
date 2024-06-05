@@ -86,7 +86,7 @@ namespace nwindow
      * Though for certain platforms that natively support this
      * (Mac OS, iOS, WebAssembly) we should opt to use those functions.
      */
-    static const char* sKeyToCharMap[static_cast<size_t>(Key::KeysMax)] = {"\x1B", "1", "2", "3", "4", "5", "6",  "7", "8", "9", "0", "-", "=", "\b", "\t", "Q", "W", "E",  "R", "T", "Y", "U", "I", "O", "P", "[", "]",
+    static const char* sKeyToCharMap[static_cast<int>(Key::KeysMax)] = {"\x1B", "1", "2", "3", "4", "5", "6",  "7", "8", "9", "0", "-", "=", "\b", "\t", "Q", "W", "E",  "R", "T", "Y", "U", "I", "O", "P", "[", "]",
                                                                            "\r",   "",  "A", "S", "D", "F", "G",  "H", "J", "K", "L", ";", ":", "'",  "\"", "`", "",  "\\", "Z", "X", "C", "V", "B", "N", "M", ",", ".",
                                                                            "/",    "",  "*", "",  " ", "",  "",   "",  "",  "",  "",  "",  "",  "",   "",   "",  "",  "",   "7", "8", "9", "-", "4", "5", "6", "+", "1",
                                                                            "2",    "3", "0", ".", "",  "",  "\r", "",  "/", "",  "",  "",  "",  "",   "",   "",  "",  "",   "",  "",  "",  "",  "",  "",  ""};
@@ -97,7 +97,7 @@ namespace nwindow
         Key         m_key;
     };
 
-    static KeyStrToKey sCharToKeyMap[static_cast<size_t>(Key::KeysMax)] = {
+    static KeyStrToKey sCharToKeyMap[static_cast<int>(Key::KeysMax)] = {
         {"\x1B", Key::Escape},
         {"1", Key::Num1},
         {"2", Key::Num2},
@@ -169,7 +169,7 @@ namespace nwindow
         {"Numlock", Key::Numlock},
     };
 
-    const char* convertKeyToString(Key key) { return sKeyToCharMap[static_cast<size_t>(key)]; }
+    const char* convertKeyToString(Key key) { return sKeyToCharMap[static_cast<int>(key)]; }
 
     static inline int compare_str(const char* s1, const char* s2)
     {

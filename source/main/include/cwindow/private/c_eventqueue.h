@@ -12,11 +12,20 @@ namespace nwindow
         ~EventQueue();
 
         void pump();
-        bool pop(Event& e);
-        void push(Event& e);
+        bool pop(Event &e);
+        void push(Event &e);
+
+        enum class ProcessingMode
+        {
+            Poll,
+            Dispatch,
+            ProcessingModeMax
+        };
+        void setProcessingMode(ProcessingMode mode);
 
     protected:
-        Queue* mQueue;
+        ProcessingMode mProcessingMode;
+        Queue *mQueue;
     };
 
 } // namespace nwindow

@@ -7,13 +7,14 @@
 #include <Windows.h>
 #include <windowsx.h>
 
-
 namespace nwindow
 {
     EventQueue::EventQueue()
     {
+        mProcessingMode = ProcessingMode::Poll;
         mQueue = QueueCreate(256);
     }
+
     EventQueue::~EventQueue()
     {
         QueueDestroy(mQueue);
@@ -23,15 +24,25 @@ namespace nwindow
     {
         MSG msg = {};
 
-        while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        for (;;)
         {
-            // Translate virtual key messages
+            if (processingMode == ProcessingMode::Poll)
+            {
+                if (!PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+                    break;
+            }
+            else
+                GetMessage(&msg, NULL, 0, 0);
+
+            if (msg.message == WM_QUIT)
+                return;
+
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
     }
 
-    bool EventQueue::pop(Event& e) { return QueuePop(mQueue, e); }
+    bool EventQueue::pop(Event &e) { return QueuePop(mQueue, e); }
     void EventQueue::push(Event &e) { QueuePush(mQueue, e); }
 
 } // namespace nwindow

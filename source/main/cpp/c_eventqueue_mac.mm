@@ -8,6 +8,7 @@ namespace nwindow
 
     EventQueue::EventQueue()
     {
+        mProcessingMode = ProcessingMode::Poll;
         mQueue = QueueCreate(256);
     }
     EventQueue::~EventQueue()

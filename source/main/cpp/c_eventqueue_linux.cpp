@@ -58,13 +58,12 @@ namespace nwindow
 
     EventQueue::EventQueue()
     {
+        mProcessingMode = ProcessingMode::Poll;
         mQueue = QueueCreate(256);
-        initialized = false;
     }
     EventQueue::~EventQueue()
     {
         QueueDestroy(mQueue);
-        initialized = false;
     }
 
     void EventQueue::pump()

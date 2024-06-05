@@ -1,5 +1,6 @@
 #include "cwindow/c_main.h"
 #include "cwindow/private/c_winstate_mac.h"
+#include "cwindow/c_eventqueue.h"
 
 winstate_t g_winstate;
 
@@ -28,6 +29,8 @@ winstate_t g_winstate;
 
 @end
 
+namespace nwindow
+{
 /**
  * MacOS Events can be per window virtual functions or received from a queue.
  * Events - https://developer.apple.com/documentation/appkit/nsevent
@@ -141,13 +144,14 @@ void EventQueue::pump() {
         break;
       }
       if (curEvent.type != EventType::None) {
-        QueuePush(mQueue, curEvent);
+        push(curEvent);
       }
 
       [NSApp sendEvent:nsEvent];
     } while (nsEvent);
   }
   [nsApp updateWindows];
+}
 }
 
 int main(int argc, char **argv) {

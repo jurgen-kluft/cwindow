@@ -1,11 +1,10 @@
-#include "cwindow/c_window_mac.h"
+#include "cwindow/private/c_window_mac.h"
 #include "cwindow/private/c_winstate_mac.h"
 
 extern winstate_t g_winstate;
 
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/CAMetalLayer.h>
-#import <QuartzCore/CAOpenGLLayer.h>
 
 @interface XWinWindow : NSWindow
 {
@@ -91,7 +90,7 @@ Window::~Window()
 
 bool Window::create(const WindowDesc& desc, EventQueue& eventQueue)
 {
-	NSApplication* nsApp = (NSApplication*)getWinState().application;
+	NSApplication* nsApp = (NSApplication*)g_winstate.application;
 
 	NSRect rect = NSMakeRect(desc.x, desc.y, desc.width, desc.height);
 	NSWindowStyleMask styleMask = NSWindowStyleMaskTitled;
@@ -180,18 +179,10 @@ void Window::setLayer(LayerType type)
 		[v setLayer:l];
 		XWinWindow* w = (XWinWindow*)window;
 	}
-	else if(type == LayerType::OpenGL)
-	{
-
-		XWinView* v = (XWinView*)view;
-		[v setWantsLayer:YES];
-		layer = [[CAOpenGLLayer alloc] init];
-		[(XWinView*)view setLayer:(CAOpenGLLayer*)layer];
-		CAOpenGLLayer* l = ((CAOpenGLLayer*)layer);
-		l.asynchronous = false;
-		[l setNeedsDisplay];
-		XWinWindow* w = (XWinWindow*)window;
-	}
+	else
+    {
+        // Vulkan ?
+    }
 }
 
 
