@@ -5,11 +5,11 @@ namespace nwindow
 {
     // https://docs.microsoft.com/en-us/windows/desktop/learnwin32/example--the-open-dialog-box
 
-    void showMessageBox(const MessageDesc& mdesc)
+    int showMessageBox(const MessageDesc& mdesc)
     {
         UINT flags = MB_APPLMODAL | MB_SETFOREGROUND | MB_ICONINFORMATION;
         flags |= MB_OK;
-        MessageBoxA(nullptr, LPCSTR("Text"), LPCSTR("Title"), flags);
+        return MessageBoxA(nullptr, LPCSTR(mdesc.text), LPCSTR(mdesc.title), flags);
     }
 
 } // namespace nwindow

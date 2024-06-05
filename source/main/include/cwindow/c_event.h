@@ -1,4 +1,9 @@
-#pragma once
+#ifndef __CWINDOW_EVENT_H__
+#define __CWINDOW_EVENT_H__
+#include "ccore/c_target.h"
+#ifdef USE_PRAGMA_ONCE
+#    pragma once
+#endif
 
 // Events in CrossWindow are heavily influenced by:
 // - winit by Pierre Krieger <https://github.com/tomaka/winit>
@@ -364,3 +369,5 @@ namespace nwindow
         bool operator==(const Event& other) const { return type == other.type && window == other.window; }
     };
 } // namespace nwindow
+
+#endif

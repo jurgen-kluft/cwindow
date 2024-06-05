@@ -3,9 +3,9 @@
 #include <Windows.h>
 #include <stdio.h>
 
-#include "cwindow/private/c_winstate_win32.h"
+#include "cwindow/private/c_window_win32.h"
 
-winstate_t g_winstate;
+nwindow::WindowPC g_WindowPC;
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -59,7 +59,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         argv = NULL;
     }
 
-    g_winstate = winstate_t(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+    g_WindowPC = nwindow::WindowPC(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
     cwindow_main(argc, (const char**)argv);
 
     // Free up the items we had to allocate for the command line arguments.

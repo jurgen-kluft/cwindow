@@ -1,4 +1,9 @@
-#pragma once
+#ifndef __CWINDOW_WINDOW_DESC_H__
+#define __CWINDOW_WINDOW_DESC_H__
+#include "ccore/c_target.h"
+#ifdef USE_PRAGMA_ONCE
+#    pragma once
+#endif
 
 #include "cwindow/c_types.h"
 
@@ -49,30 +54,6 @@ namespace nwindow
         const char* iconPath; // Icon Path
     };
 
-    struct UVec2
-    {
-        u32 x;
-        u32 y;
-        
-        UVec2(u32 x = 0, u32 y = 0)
-            : x(x)
-            , y(y)
-        {
-        }
-
-        template <typename T> UVec2 operator*(T b) const
-        {
-            UVec2 self = *this;
-            self.x     = static_cast<u32>(static_cast<T>(self.x) * b);
-            self.y     = static_cast<u32>(static_cast<T>(self.y) * b);
-            return self;
-        }
-        template <typename T> UVec2 operator/(T b) const
-        {
-            UVec2 self = *this;
-            self.x     = static_cast<u32>(static_cast<T>(self.x) / b);
-            self.y     = static_cast<u32>(static_cast<T>(self.y) / b);
-            return self;
-        }
-    };
 } // namespace nwindow
+
+#endif // __CWINDOW_WINDOW_DESC_H__

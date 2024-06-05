@@ -1,66 +1,43 @@
-#pragma once
+#ifndef __CWINDOW_WINDOW_MAC_H__
+#define __CWINDOW_WINDOW_MAC_H__
+#include "ccore/c_target.h"
+#ifdef USE_PRAGMA_ONCE
+#    pragma once
+#endif
 
 #include "cwindow/c_eventqueue.h"
 #include "cwindow/c_windowdesc.h"
 
 namespace nwindow
 {
-    /**
-     * Wrapper Window for a NSWindow and it's various children.
-     */
-    class Window
+    class WindowMac
     {
     public:
-        Window();
-        ~Window();
+        int          argc;
+        const char** argv;
+        void*        application;
+        void*        window;  // NSWindow
+        void*        view;    // NSView
 
-        // Initialize this window with the Cocoa API.
-        bool create(const WindowDesc& desc, EventQueue& eventQueue);
-
-        // Get this Window's descriptor object.
-        WindowDesc getDesc();
-
-        // Request that this window be closed.
-        void close();
-
-        // Set the mouse position in display space.
-        void setMousePosition(unsigned int x, unsigned int y);
-
-        // Get the size of the current display this window is in.
-        UVec2 getCurrentDisplaySize();
-
-        // MacOS Only Functions:
-
-        enum class LayerType
+        WindowMac()
+            : argc(0)
+            , argv(nullptr)
+            , application(nullptr)
+            , window(nullptr)
+            , view(nullptr)
         {
-            Metal,
-            OpenGL,
-            LayerTypeMax
-        };
+        }
 
-        // Set the type of this window's view layer
-        void setLayer(LayerType type);
-
-    protected:
-        // NSString*
-        void* mTitle;
-
-        WindowDesc mDesc;
-
-        // XWinWindow*
-        void* window;
-
-        // XWinView*
-        void* view;
-
-        // Any Layer Type
-        void* layer;
-
-        /**
-         * MacOS Keycodes:
-         * https://stackoverflow.com/questions/3202629/where-can-i-find-a-list-of-mac-virtual-key-codes
-         */
-        typedef Key MacKeycodeToDigitalInputMap[1 << (8 * sizeof(unsigned char))];
+        WindowMac(int argc, const char** argv, void* application)
+            : argc(argc)
+            , argv(argv)
+            , application(application)
+            , window(nullptr)
+            , view(nullptr)
+        {
+        }
     };
 
-} // namespace nwindow
+}  // namespace nwindow
+
+#endif  // __CWINDOW_WINDOW_MAC_H__

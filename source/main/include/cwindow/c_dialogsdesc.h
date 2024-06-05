@@ -11,6 +11,8 @@ namespace nwindow
     struct MessageDesc
     {
         MessageType type; // OK, Error, etc.
+        const char* text;
+        const char* title;
     };
 
 

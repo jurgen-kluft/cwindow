@@ -1,10 +1,10 @@
 #include "cwindow/c_main.h"
-#include "cwindow/private/c_winstate_mac.h"
+#include "cwindow/private/c_window_mac.h"
 #include "cwindow/c_eventqueue.h"
 
-winstate_t g_winstate;
-
 #import <Cocoa/Cocoa.h>
+
+nwindow::WindowMac g_windowMac;
 
 @interface XWinApplication : NSApplication {
 }
@@ -23,7 +23,7 @@ winstate_t g_winstate;
       postNotificationName:NSApplicationDidFinishLaunchingNotification
                     object:NSApp];
 
-  const winstate_t &state = g_winstate;
+  const nwindow::WindowMac &state = g_windowMac;
   cwindow_main(state.argc, (const char **)state.argv);
 }
 
@@ -37,7 +37,7 @@ namespace nwindow
  */
 void EventQueue::pump() {
   // Update Application
-  NSApplication *nsApp = (NSApplication *)g_winstate.application;
+  NSApplication *nsApp = (NSApplication *)g_windowMac.application;
   @autoreleasepool {
     NSEvent *nsEvent = nil;
 
@@ -156,10 +156,9 @@ void EventQueue::pump() {
 
 int main(int argc, char **argv) {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
   NSApplication *applicationObject = [XWinApplication alloc];
 
-  g_winstate = winstate_t(argc, (const char **)argv, applicationObject);
+  g_windowMac = nwindow::WindowMac(argc, (const char **)argv, applicationObject);
 
   if ([applicationObject respondsToSelector:@selector(run)]) {
     [applicationObject performSelectorOnMainThread:@selector(run)

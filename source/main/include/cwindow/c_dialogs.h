@@ -4,6 +4,6 @@
 
 namespace nwindow
 {
-    void showMessageBox(const MessageDesc& mdesc);
+    int showMessageBox(const MessageDesc& mdesc);
 
 } // namespace nwindow
