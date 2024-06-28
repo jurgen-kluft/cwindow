@@ -1,11 +1,6 @@
-#ifndef __CWINDOW_EVENT_H__
-#define __CWINDOW_EVENT_H__
-#include "ccore/c_target.h"
-#ifdef USE_PRAGMA_ONCE
-#    pragma once
-#endif
+#pragma once
 
-// Events in CrossWindow are heavily influenced by:
+// Events are heavily influenced by:
 // - winit by Pierre Krieger <https://github.com/tomaka/winit>
 // - W3's DOM Events
 // <https://dvcs.w3.org/hg/dom3events/raw-file/tip/html/DOM3-Events.html
@@ -16,28 +11,28 @@ namespace nwindow
     enum class EventType : int
     {
         None = 0,
-        Close,      // Closing a window
-        Create,     // Creating a window
-        Focus,      // Focus/Unfocus on a window
-        Paint,      // Paint events, a good time to present any graphical changes
-        Resize,     // Resizing a window
-        DPI,        // Change in the screen DPI scaling (such as moving a window to a monitor with a larger DPI.
-        Keyboard,   // Keyboard input such as press/release events
-        MouseMove,  // Mouse moving events
-        MouseRaw,   // Raw mouse data events
-        MouseWheel, // Mouse scrolling events
-        MouseInput, // Mouse button press events
-        Touch,      // Touch events
-        Gamepad,    // Gamepad Input Events such as analog sticks, button presses
-        DropFile,   // Dropping a file on the window
-        HoverFile,  // Hovering a file over a window
+        Close,       // Closing a window
+        Create,      // Creating a window
+        Focus,       // Focus/Unfocus on a window
+        Paint,       // Paint events, a good time to present any graphical changes
+        Resize,      // Resizing a window
+        DPI,         // Change in the screen DPI scaling (such as moving a window to a monitor with a larger DPI.
+        Keyboard,    // Keyboard input such as press/release events
+        MouseMove,   // Mouse moving events
+        MouseRaw,    // Raw mouse data events
+        MouseWheel,  // Mouse scrolling events
+        MouseInput,  // Mouse button press events
+        Touch,       // Touch events
+        Gamepad,     // Gamepad Input Events such as analog sticks, button presses
+        DropFile,    // Dropping a file on the window
+        HoverFile,   // Hovering a file over a window
         EventTypeMax
     };
 
     // Focus data passed with Focus events
     struct FocusData
     {
-        bool focused; // true if focused, false if not
+        bool focused;  // true if focused, false if not
 
         FocusData(bool focused);
 
@@ -47,9 +42,9 @@ namespace nwindow
     // Resize data passed with Resize events
     struct ResizeData
     {
-        unsigned int width;    // new width of window viewport
-        unsigned int height;   // New height of window viewport
-        bool         resizing; // In the process of resizing
+        unsigned int width;     // new width of window viewport
+        unsigned int height;    // New height of window viewport
+        bool         resizing;  // In the process of resizing
 
         ResizeData(unsigned int width, unsigned int height, bool resizing);
 
@@ -78,10 +73,10 @@ namespace nwindow
     // buttons. Pressed is true, released is false;
     struct ModifierState
     {
-        bool ctrl;  // Ctrl key
-        bool alt;   // Alt key
-        bool shift; // Shift key
-        bool meta;  // Meta buttons such as the Windows button or Mac's Command button
+        bool ctrl;   // Ctrl key
+        bool alt;    // Alt key
+        bool shift;  // Shift key
+        bool meta;   // Meta buttons such as the Windows button or Mac's Command button
 
         ModifierState(bool ctrl = false, bool alt = false, bool shift = false, bool meta = false);
     };
@@ -196,7 +191,6 @@ namespace nwindow
         LWin,
         RWin,
         Apps,
-
         KeysMax
     };
 
@@ -228,12 +222,12 @@ namespace nwindow
     // The event data passed with mouse events click, mouse moving events
     struct MouseMoveData
     {
-        unsigned int x;       // Current x position relative to active window
-        unsigned int y;       // Current y position relative to active window
-        unsigned int screenx; // Current global x position
-        unsigned int screeny; // Current in global y position
-        int          deltax;  // Change in x relative to previous event, used for FPS motion
-        int          deltay;  // Change in y relative to previous event, used for FPS motion
+        unsigned int x;        // Current x position relative to active window
+        unsigned int y;        // Current y position relative to active window
+        unsigned int screenx;  // Current global x position
+        unsigned int screeny;  // Current in global y position
+        int          deltax;   // Change in x relative to previous event, used for FPS motion
+        int          deltay;   // Change in y relative to previous event, used for FPS motion
 
         static const EventType type = EventType::MouseMove;
 
@@ -315,15 +309,15 @@ namespace nwindow
     // Data passed for gamepad events
     struct GamepadData
     {
-        bool          connected;     // If the gamepad is connected or not
-        int           index;         // Gamepad Index
-        const char*   id;            // String id of the brand of the gamepad
-        const char*   mapping;       // String id that lays out controller mapping (Southpaw, etc.)
-        float*        axis;          // 64, Analog Axis input data, such as joysticks, normalized range [-1, 1]
-        float*        analogButton;  // 64, Analog gamepad buttons like triggers, bound to [0, 1].
-        unsigned int  numAxes;       // The number of analog axes
-        unsigned long digitalButton; // 64
-        unsigned int  numButtons;    // Number of digital buttons and analog buttons
+        bool          connected;      // If the gamepad is connected or not
+        int           index;          // Gamepad Index
+        const char*   id;             // String id of the brand of the gamepad
+        const char*   mapping;        // String id that lays out controller mapping (Southpaw, etc.)
+        float*        axis;           // 64, Analog Axis input data, such as joysticks, normalized range [-1, 1]
+        float*        analogButton;   // 64, Analog gamepad buttons like triggers, bound to [0, 1].
+        unsigned int  numAxes;        // The number of analog axes
+        unsigned long digitalButton;  // 64
+        unsigned int  numButtons;     // Number of digital buttons and analog buttons
 
         static const EventType type = EventType::Gamepad;
     };
@@ -349,9 +343,9 @@ namespace nwindow
     class Event
     {
     public:
-        Window*   window; // Pointer to a CrossWindow window
-        EventType type;   // The event's type
-        EventData data;   // Inner data of the event
+        Window*   window;  // Pointer to a CrossWindow window
+        EventType type;    // The event's type
+        EventData data;    // Inner data of the event
 
         Event(EventType type = EventType::None, Window* window = nullptr);
         Event(FocusData data, Window* window = nullptr);
@@ -368,6 +362,6 @@ namespace nwindow
 
         bool operator==(const Event& other) const { return type == other.type && window == other.window; }
     };
-} // namespace nwindow
+}  // namespace nwindow
 
 #endif
