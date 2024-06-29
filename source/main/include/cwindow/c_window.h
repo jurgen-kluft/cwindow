@@ -1,7 +1,13 @@
-#pragma once
+#ifndef __CWINDOW_WINDOW_H__
+#define __CWINDOW_WINDOW_H__
+#include "ccore/c_target.h"
+#ifdef USE_PRAGMA_ONCE
+#    pragma once
+#endif
 
 #include "cwindow/c_event.h"
 #include "cwindow/c_types.h"
+#include "cwindow/c_windowdesc.h"
 
 namespace nwindow
 {
@@ -54,18 +60,4 @@ namespace nwindow
 
 }  // namespace nwindow
 
-#ifdef TARGET_PC
-#    include "cwindow/private/c_window_win32.h"
 #endif
-
-#ifdef TARGET_MAC
-#    include "cwindow/private/c_window_mac.h"
-#endif
-
-#ifdef TARGET_LINUX
-#    include "cwindow/private/c_window_linux.h"
-#endif
-
-#include "cwindow/c_windowdesc.h"
-
-namespace cwin = nwindow;

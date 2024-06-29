@@ -6,7 +6,6 @@
 #endif
 
 #include "cwindow/c_types.h"
-#include "cwindow/c_windowdesc.h"
 
 namespace nwindow
 {

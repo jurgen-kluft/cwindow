@@ -3,24 +3,11 @@
 
 #include <X11/Xlib.h>
 
-struct winstate_t
-{
-    int          argc;
-    const char** argv;
-
-    winstate_t(int argc, const char** argv)
-        : argc(argc)
-        , argv(argv)
-    {
-    }
-};
-
-static winstate_t g_winstate;
-const winstate_t& getWinState() { return g_winstate; }
+static WindowStateLinux gLinuxWindowState;
 
 int main(int argc, char** argv)
 {
-    g_winstate = winstate_t(argc, (const char**)argv);
+    gLinuxWindowState = WindowStateLinux(argc, (const char**)argv);
     cwindow_main(argc, argv);
 
     XDestroyWindow(display, xlib_window);

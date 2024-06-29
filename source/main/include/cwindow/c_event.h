@@ -1,4 +1,9 @@
-#pragma once
+#ifndef __CWINDOW_EVENT_H__
+#define __CWINDOW_EVENT_H__
+#include "ccore/c_target.h"
+#ifdef USE_PRAGMA_ONCE
+#    pragma once
+#endif
 
 // Events are heavily influenced by:
 // - winit by Pierre Krieger <https://github.com/tomaka/winit>

@@ -5,8 +5,7 @@
 #    pragma once
 #endif
 
-#include "cwindow/c_eventqueue.h"
-#include "cwindow/c_windowdesc.h"
+#include "cwindow/private/c_eventqueue.h"
 
 namespace nwindow
 {
@@ -16,8 +15,8 @@ namespace nwindow
         int          argc;
         const char** argv;
         void*        application;
-        void*        window;  // NSWindow
-        void*        view;    // NSView
+        void*        window;  // XWinWindow
+        void*        view;    // XWinView
 
         WindowMac()
             : argc(0)

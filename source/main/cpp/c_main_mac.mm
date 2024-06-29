@@ -1,6 +1,7 @@
 #include "cwindow/c_main.h"
 #include "cwindow/private/c_window_mac.h"
-#include "cwindow/c_eventqueue.h"
+#include "cwindow/private/c_eventqueue.h"
+#include "cwindow/c_event.h"
 
 #import <Cocoa/Cocoa.h>
 

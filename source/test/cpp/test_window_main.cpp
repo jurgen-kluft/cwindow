@@ -1,13 +1,12 @@
 #include "cwindow/c_main.h"
-#include "cwindow/c_event.h"
+#include "cwindow/private/c_eventqueue.h"
 #include "cwindow/c_window.h"
-
 
 
 void cwindow_main(int argc, const char** argv)
 {
     // Window Description
-    cwin::WindowDesc windowDesc;
+    nwindow::WindowDesc windowDesc;
     windowDesc.name = "Test";
     windowDesc.title = "My Title";
     windowDesc.visible = true;
@@ -15,8 +14,8 @@ void cwindow_main(int argc, const char** argv)
     windowDesc.height = 720;
 
     // Initialize
-    cwin::EventQueue eventQueue;
-    cwin::Window* window = cwin::Window::create(windowDesc, eventQueue);
+    nwindow::EventQueue eventQueue;
+    nwindow::Window* window = nwindow::Window::create(windowDesc, eventQueue);
 
     if (!window)
         return;
@@ -28,14 +27,14 @@ void cwindow_main(int argc, const char** argv)
         eventQueue.pump();
 
         // Handle events by draining the event queue
-        cwin::Event event;
+        nwindow::Event event;
         while (!eventQueue.pop(event))
         {
-            if (event.type == cwin::EventType::MouseMove)
+            if (event.type == nwindow::EventType::MouseMove)
             {
-                const cwin::MouseMoveData& mouse = event.data.mouseMove;
+                const nwindow::MouseMoveData& mouse = event.data.mouseMove;
             }
-            if (event.type == cwin::EventType::Close)
+            if (event.type == nwindow::EventType::Close)
             {
                 window->close();
                 close = true;
@@ -43,5 +42,5 @@ void cwindow_main(int argc, const char** argv)
         }
     }
 
-    cwin::Window::destroy(window);
+    nwindow::Window::destroy(window);
 }
