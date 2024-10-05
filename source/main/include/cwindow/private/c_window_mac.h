@@ -5,14 +5,14 @@
 #    pragma once
 #endif
 
-#include "cwindow/private/c_eventqueue.h"
+#include "cwindow/c_types.h"
 
 namespace nwindow
 {
     class WindowMac
     {
     public:
-        int          argc;
+        s32          argc;
         const char** argv;
         void*        application;
         void*        window;  // XWinWindow
@@ -27,7 +27,7 @@ namespace nwindow
         {
         }
 
-        WindowMac(int argc, const char** argv, void* application)
+        WindowMac(s32 argc, const char** argv, void* application)
             : argc(argc)
             , argv(argv)
             , application(application)

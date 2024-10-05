@@ -3,7 +3,6 @@
 
 namespace nwindow
 {
-
     bool Window::create(const WindowDesc& desc, EventQueue& eventQueue)
     {
         XInitThreads();
