@@ -18,12 +18,12 @@ func GetPackage() *denv.Package {
 	mainpkg.AddPackage(basepkg)
 
 	// 'cwindow' library
-	mainlib := denv.SetupDefaultCppLibProject("cwindow", "github.com\\jurgen-kluft\\cwindow")
-	mainlib.Dependencies = append(mainlib.Dependencies, basepkg.GetMainLib())
+	mainlib := denv.SetupCppLibProject("cwindow", "github.com\\jurgen-kluft\\cwindow")
+	mainlib.AddDependencies(basepkg.GetMainLib()...)
 
 	// unittest project
 	maintest := denv.SetupDefaultCppTestProject("cwindow_test", "github.com\\jurgen-kluft\\cwindow")
-	maintest.Dependencies = append(maintest.Dependencies, unittestpkg.GetMainLib())
+	maintest.AddDependencies(unittestpkg.GetMainLib()...)
 	maintest.Dependencies = append(maintest.Dependencies, mainlib)
 
 	mainpkg.AddMainLib(mainlib)
