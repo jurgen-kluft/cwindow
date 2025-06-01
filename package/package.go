@@ -6,27 +6,38 @@ import (
 	cunittest "github.com/jurgen-kluft/cunittest/package"
 )
 
-// GetPackage returns the package object of 'cwindow'
+const (
+	repo_path = "github.com\\jurgen-kluft"
+	repo_name = "cwindow"
+)
+
 func GetPackage() *denv.Package {
-	// Dependencies
-	basepkg := cbase.GetPackage()
-	unittestpkg := cunittest.GetPackage()
+	name := repo_name
 
-	// The main (cwindow) package
-	mainpkg := denv.NewPackage("cwindow")
-	mainpkg.AddPackage(unittestpkg)
-	mainpkg.AddPackage(basepkg)
+	// dependencies
+	cunittestpkg := cunittest.GetPackage()
+	cbasepkg := cbase.GetPackage()
 
-	// 'cwindow' library
-	mainlib := denv.SetupCppLibProject("cwindow", "github.com\\jurgen-kluft\\cwindow")
-	mainlib.AddDependencies(basepkg.GetMainLib()...)
+	// main package
+	mainpkg := denv.NewPackage(repo_path, repo_name)
+	mainpkg.AddPackage(cunittestpkg)
+	mainpkg.AddPackage(cbasepkg)
+
+	// main library
+	mainlib := denv.SetupCppLibProject(mainpkg, name)
+	mainlib.AddDependencies(cbasepkg.GetMainLib()...)
+
+	// test library
+	testlib := denv.SetupCppTestLibProject(mainpkg, name)
+	testlib.AddDependencies(cunittestpkg.GetTestLib()...)
 
 	// unittest project
-	maintest := denv.SetupDefaultCppTestProject("cwindow_test", "github.com\\jurgen-kluft\\cwindow")
-	maintest.AddDependencies(unittestpkg.GetMainLib()...)
-	maintest.Dependencies = append(maintest.Dependencies, mainlib)
+	maintest := denv.SetupCppTestProject(mainpkg, name)
+	maintest.AddDependencies(cunittestpkg.GetMainLib()...)
+	maintest.AddDependency(testlib)
 
 	mainpkg.AddMainLib(mainlib)
+	mainpkg.AddTestLib(testlib)
 	mainpkg.AddUnittest(maintest)
 	return mainpkg
 }
