@@ -5,11 +5,10 @@
 #    pragma once
 #endif
 
+#include "cwindow/c_event.h"
+
 namespace nwindow
 {
-    class Event;
-    struct Queue;
-
     class EventQueue
     {
     public:
@@ -17,8 +16,8 @@ namespace nwindow
         ~EventQueue();
 
         void pump();
-        bool pop(Event &e);
-        void push(Event &e);
+        bool pop(Event& e);
+        void push(Event& e);
 
         enum class ProcessingMode
         {
@@ -30,7 +29,10 @@ namespace nwindow
 
     protected:
         ProcessingMode mProcessingMode;
-        Queue *mQueue;
+        i32            mHead;  // Index of the next event to pop
+        i32            mTail;  // Index of the next slot to push a new event
+        i32            mCount; // Number of events currently in the queue
+        Event          mEventQueue[1024];
     };
 
 } // namespace nwindow

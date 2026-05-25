@@ -14,7 +14,7 @@ Below an example of how to use this library.
 void cwindow_main(int argc, const char** argv)
 {
     // Window Description
-    cwin::WindowDesc windowDesc;
+    cwindow::WindowDesc windowDesc;
     windowDesc.name = "Test";
     windowDesc.title = "My Title";
     windowDesc.visible = true;
@@ -22,8 +22,8 @@ void cwindow_main(int argc, const char** argv)
     windowDesc.height = 720;
 
     // Initialize
-    cwin::Window window;
-    cwin::EventQueue eventQueue;
+    cwindow::Window window;
+    cwindow::EventQueue eventQueue;
 
     if (!window.create(windowDesc, eventQueue))
         return; 
@@ -35,14 +35,14 @@ void cwindow_main(int argc, const char** argv)
         eventQueue.pump();
 
         // Handle events by draining the event queue
-        cwin::Event event;
+        cwindow::Event event;
         while (!eventQueue.pop(event))
         {
-            if (event.type == cwin::EventType::MouseMove)
+            if (event.type == cwindow::EventType::MouseMove)
             {
-                const cwin::MouseData& mouse = event.data.mouseMove;
+                const cwindow::MouseData& mouse = event.data.mouseMove;
             }
-            if (event.type == cwin::EventType::Close)
+            if (event.type == cwindow::EventType::Close)
             {
                 window.close();
                 close = true;

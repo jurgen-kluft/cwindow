@@ -1,9 +1,8 @@
 #include "cwindow/private/c_window_linux.h"
-#include "cwindow/private/c_eventqueue.h"
+#include "cwindow/c_eventqueue.h"
 
 namespace nwindow
 {
-
     bool Window::create(const WindowDesc& desc, EventQueue& eventQueue)
     {
         XInitThreads();

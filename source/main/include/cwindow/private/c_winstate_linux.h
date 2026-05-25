@@ -6,7 +6,6 @@
 #endif
 
 #include "cwindow/c_types.h"
-#include "cwindow/c_windowdesc.h"
 
 namespace nwindow
 {
@@ -15,7 +14,7 @@ namespace nwindow
         void*       hInstance;
         void*       hPrevInstance;
         const char* lpCmdLine;
-        int         nCmdShow;
+        s32         nCmdShow;
 
         WindowStateLinux()
             : hInstance(nullptr)
@@ -25,7 +24,7 @@ namespace nwindow
         {
         }
 
-        WindowStateLinux(void* hInstance, void* hPrevInstance, const char* lpCmdLine, int nCmdShow)
+        WindowStateLinux(void* hInstance, void* hPrevInstance, const char* lpCmdLine, s32 nCmdShow)
             : hInstance(hInstance)
             , hPrevInstance(hPrevInstance)
             , lpCmdLine(lpCmdLine)

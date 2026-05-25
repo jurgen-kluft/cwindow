@@ -15,7 +15,7 @@ namespace nwindow
         HINSTANCE hInstance;
         HINSTANCE hPrevInstance;
         LPSTR     lpCmdLine;
-        int       nCmdShow;
+        s32       nCmdShow;
 
         WindowPC()
             : hInstance(nullptr)
@@ -25,7 +25,7 @@ namespace nwindow
         {
         }
 
-        WindowPC(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+        WindowPC(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, s32 nCmdShow)
             : hInstance(hInstance)
             , hPrevInstance(hPrevInstance)
             , lpCmdLine(lpCmdLine)

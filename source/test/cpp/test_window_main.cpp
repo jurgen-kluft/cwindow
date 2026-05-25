@@ -1,5 +1,5 @@
 #include "cwindow/c_main.h"
-#include "cwindow/private/c_eventqueue.h"
+#include "cwindow/c_eventqueue.h"
 #include "cwindow/c_window.h"
 
 

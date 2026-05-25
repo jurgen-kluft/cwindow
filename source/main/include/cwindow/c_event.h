@@ -362,7 +362,6 @@ namespace nwindow
         Event(MouseWheelData data, Window* window = nullptr);
         Event(GamepadData data, Window* window = nullptr);
         Event(DpiData data, Window* window = nullptr);
-
         ~Event();
 
         bool operator==(const Event& other) const { return type == other.type && window == other.window; }

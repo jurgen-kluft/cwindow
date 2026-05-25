@@ -1,6 +1,4 @@
-#include "cwindow/private/c_eventqueue.h"
-#include "cwindow/c_event.h"
-#include "cwindow/private/c_queue.h"
+#include "cwindow/c_eventqueue.h"
 
 namespace nwindow
 {
@@ -9,13 +7,33 @@ namespace nwindow
     EventQueue::EventQueue()
     {
         mProcessingMode = ProcessingMode::Poll;
-        mQueue = QueueCreate(256);
-    }
-    EventQueue::~EventQueue()
-    {
-        QueueDestroy(mQueue);
+        mHead         = 0;
+        mTail         = 0;
+        mCount        = 0;
     }
 
-    bool EventQueue::pop(Event& e) { return QueuePop(mQueue, e); }
-    void EventQueue::push(Event &e) { QueuePush(mQueue, e); }
+    EventQueue::~EventQueue()
+    {
+        
+    }
+
+    bool EventQueue::pop(Event& e) 
+    { 
+        if (mHead == mTail) return false; // queue is empty
+        e = mQueue[mHead];
+        mHead = (mHead + 1) % 1024; // wrap around
+        mCount--;
+        return true;
+    }
+
+    void EventQueue::push(Event &e) 
+    {
+        // Can we push ?
+        if (mCount == 1024) 
+            return;
+
+        mQueue[mTail] = e;
+        mTail = (mTail + 1) % 1024; // wrap around
+        mCount++;
+    }
 }

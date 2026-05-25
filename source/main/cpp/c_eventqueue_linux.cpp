@@ -1,13 +1,12 @@
-#include "cwindow/private/c_queue.h"
 #include "cwindow/c_window.h"
-#include "cwindow/c_event.h"
+#include "cwindow/c_eventqueue.h"
 
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 
 namespace nwindow
 {
-    static void EventQueuePushEvent(Queue *queue, const XEvent *event, Window *window)
+    static void EventQueuePushEvent(Queue* queue, const XEvent* event, Window* window)
     {
         switch (event->type)
         {
@@ -36,16 +35,16 @@ namespace nwindow
                 Key d = Key::KeysMax;
                 switch (event->xkey.keycode)
                 {
-                    case 0x9:  // Escape
+                    case 0x9: // Escape
                         d = Key::Escape;
                         break;
-                    case XK_KP_Left:  // left arrow key
+                    case XK_KP_Left: // left arrow key
                         d = Key::Left;
                         break;
-                    case 0x72:  // right arrow key
+                    case 0x72: // right arrow key
                         d = Key::Right;
                         break;
-                    case 0x41:  // space bar
+                    case 0x41: // space bar
                         d = Key::Space;
                         break;
                 }
@@ -60,9 +59,11 @@ namespace nwindow
     EventQueue::EventQueue()
     {
         mProcessingMode = ProcessingMode::Poll;
-        mQueue          = QueueCreate(1024);
+        mHead           = 0;
+        mTail           = 0;
+        mCount          = 0;
     }
-    EventQueue::~EventQueue() { QueueDestroy(mQueue); }
+    EventQueue::~EventQueue() {}
 
     void EventQueue::pump()
     {
@@ -75,7 +76,23 @@ namespace nwindow
         }
     }
 
-    bool EventQueue::pop(Event &e) { return QueuePop(mQueue, e); }
-    void EventQueue::push(Event &e) { QueuePush(mQueue, e); }
+    bool EventQueue::pop(Event& e)
+    {
+        if (mCount == 0)
+            return false;
+        e     = mQueue[mHead];
+        mHead = (mHead + 1) % 1024;
+        mCount--;
+        return true;
+    }
 
-}  // namespace nwindow
+    void EventQueue::push(Event& e)
+    {
+        if (mCount == 1024)
+            return;
+        mQueue[mTail] = e;
+        mTail         = (mTail + 1) % 1024;
+        mCount++;
+    }
+
+} // namespace nwindow

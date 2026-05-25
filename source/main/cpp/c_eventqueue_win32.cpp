@@ -1,6 +1,4 @@
-#include "cwindow/private/c_eventqueue.h"
-#include "cwindow/private/c_queue.h"
-#include "cwindow/c_event.h"
+#include "cwindow/c_eventqueue.h"
 
 #include "Shobjidl.h"
 #include "dwmapi.h"
@@ -13,13 +11,12 @@ namespace nwindow
     EventQueue::EventQueue()
     {
         mProcessingMode = ProcessingMode::Poll;
-        mQueue = QueueCreate(256);
+        mHead           = 0;
+        mTail           = 0;
+        mCount          = 0;
     }
 
-    EventQueue::~EventQueue()
-    {
-        QueueDestroy(mQueue);
-    }
+    EventQueue::~EventQueue() {}
 
     void EventQueue::pump()
     {
@@ -43,7 +40,23 @@ namespace nwindow
         }
     }
 
-    bool EventQueue::pop(Event &e) { return QueuePop(mQueue, e); }
-    void EventQueue::push(Event &e) { QueuePush(mQueue, e); }
+    bool EventQueue::pop(Event& e)
+    {
+        if (mCount == 0)
+            return false;
+        e     = mQueue[mHead];
+        mHead = (mHead + 1) % 1024;
+        mCount--;
+        return true;
+    }
+
+    void EventQueue::push(Event& e)
+    {
+        if (mCount == 1024)
+            return;
+        mQueue[mTail] = e;
+        mTail         = (mTail + 1) % 1024;
+        mCount++;
+    }
 
 } // namespace nwindow

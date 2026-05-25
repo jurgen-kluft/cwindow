@@ -1,7 +1,5 @@
 #include "cwindow/private/c_window_win32.h"
-#include "cwindow/private/c_eventqueue.h"
-#include "cwindow/private/c_queue.h"
-#include "cwindow/c_event.h"
+#include "cwindow/c_eventqueue.h"
 
 #include "Shobjidl.h"
 #include "dwmapi.h"
